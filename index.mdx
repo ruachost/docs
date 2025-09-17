@@ -1,97 +1,123 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Ruach SMS API"
+description: "Powerful SMS API for sending messages, managing campaigns, and tracking delivery reports"
 ---
 
-## Setting up
+## Welcome to Ruach (Formerly Netvox) SMS API
 
-Get your documentation site up and running in minutes.
+The Ruach SMS API provides a comprehensive solution for sending SMS messages, managing campaigns, and tracking delivery reports. Our RESTful API is designed to be simple, reliable, and scalable for businesses of all sizes.
 
 <Card
-  title="Start here"
+  title="Get Started"
   icon="rocket"
-  href="/quickstart"
+  href="/api-reference/authentication"
   horizontal
 >
-  Follow our three step quickstart guide.
+  Learn how to authenticate and make your first API call.
 </Card>
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
+## Key Features
 
 <Columns cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Send SMS Messages"
+    icon="message"
+    href="/api-reference/sms/send-sms-post"
   >
-    Edit your docs locally and preview them in real time.
+    Send individual or bulk SMS messages with delivery tracking.
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Campaign Management"
+    icon="chart-line"
+    href="/api-reference/campaigns/get-campaigns"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Create and manage SMS campaigns with detailed statistics.
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
+    title="Group Management"
+    icon="users"
+    href="/api-reference/groups/get-groups"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    Organize contacts into groups for targeted messaging.
+  </Card>
+  <Card
+    title="Template System"
+    icon="file-text"
+    href="/api-reference/templates/get-templates"
+  >
+    Create and manage message templates for consistent branding.
   </Card>
 </Columns>
 
-## Create beautiful pages
+## Quick Start
 
-Everything you need to create world-class documentation.
+### 1. Authentication
+
+All API requests require authentication using your `ApiKey` and `ClientId`:
+
+```bash
+curl -X GET "https://accounts.netvox.ng/api/v2/Balance?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID"
+```
+
+### 2. Send Your First SMS
+
+```bash
+curl -X POST "https://accounts.netvox.ng/api/v2/SendSMS" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID",
+    "SenderId": "YOUR_SENDER_ID",
+    "Message": "Hello from Ruach SMS API!",
+    "MobileNumbers": "1234567890"
+  }'
+```
+
+### 3. Check Delivery Status
+
+```bash
+curl -X GET "https://accounts.netvox.ng/api/v2/MessageStatus?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&MessageId=MESSAGE_ID"
+```
+
+## API Endpoints
 
 <Columns cols={2}>
   <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
+    title="Credit Balance"
+    icon="wallet"
+    href="/api-reference/credit-balance"
   >
-    Use MDX to style your docs pages.
+    Check your account balance and credit status.
   </Card>
   <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
+    title="Sender ID Management"
+    icon="id-card"
+    href="/api-reference/sender-ids/get-sender-ids"
   >
-    Add sample code to demonstrate how to use your product.
+    Manage your approved sender IDs for SMS delivery.
   </Card>
   <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
+    title="Delivery Reports"
+    icon="chart-bar"
+    href="/api-reference/webhooks/delivery-reports"
   >
-    Display images and other media.
+    Set up webhooks to receive real-time delivery reports.
   </Card>
   <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
+    title="Error Handling"
+    icon="exclamation-triangle"
+    href="/api-reference/error-codes"
   >
-    Write once and reuse across your docs.
+    Understand error codes and how to handle API responses.
   </Card>
 </Columns>
 
-## Need inspiration?
+## Need Help?
 
 <Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
+  title="Contact Support"
+  icon="headset"
+  href="mailto:support@ruach.ng"
 >
-  Browse our showcase of exceptional documentation sites.
+  Get help from our technical support team.
 </Card>

@@ -1,0 +1,105 @@
+---
+title: "Update Group"
+description: "Update an existing contact group"
+api: "PUT /api/v2/Group"
+---
+
+## Update Group
+
+Update the name of an existing contact group.
+
+<CodeGroup>
+
+```bash cURL
+curl -X PUT "https://accounts.netvox.ng/api/v2/Group?id=33" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "GroupName": "Updated Group Name",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/Group?id=33', {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    GroupName: 'Updated Group Name',
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/Group?id=33"
+data = {
+    "GroupName": "Updated Group Name",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.put(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Parameters
+
+<ParamField query="id" type="number" required>
+  ID of the group to update
+</ParamField>
+
+## Request Body
+
+<ParamField body="GroupName" type="string" required>
+  New name for the group
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "Group updated Successfully."
+}
+```
+
+## Use Cases
+
+- **Group maintenance**: Update group names for better organization
+- **Rebranding**: Change group names to match new business requirements
+- **Integration sync**: Update groups to match external system changes

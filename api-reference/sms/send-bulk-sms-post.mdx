@@ -1,0 +1,240 @@
+---
+title: "Send Bulk SMS (POST)"
+description: "Send bulk SMS messages using POST method with JSON payload"
+api: "POST /api/v2/SendBulkSMS"
+---
+
+## Send Bulk SMS (POST)
+
+Send bulk SMS messages using the POST method with a JSON request body. This method is recommended for sending different messages to different recipients.
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://accounts.netvox.ng/api/v2/SendBulkSMS" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "SenderId": "YOUR_SENDER_ID",
+    "Is_Unicode": false,
+    "Is_Flash": false,
+    "SchedTime": "",
+    "Messages": [
+      {
+        "Number": "1234567890",
+        "Text": "Hello John, your order is ready!"
+      },
+      {
+        "Number": "0987654321",
+        "Text": "Hello Jane, your appointment is tomorrow at 2 PM"
+      }
+    ],
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/SendBulkSMS', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    SenderId: 'YOUR_SENDER_ID',
+    Is_Unicode: false,
+    Is_Flash: false,
+    SchedTime: '',
+    Messages: [
+      {
+        Number: '1234567890',
+        Text: 'Hello John, your order is ready!'
+      },
+      {
+        Number: '0987654321',
+        Text: 'Hello Jane, your appointment is tomorrow at 2 PM'
+      }
+    ],
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/SendBulkSMS"
+data = {
+    "SenderId": "YOUR_SENDER_ID",
+    "Is_Unicode": False,
+    "Is_Flash": False,
+    "SchedTime": "",
+    "Messages": [
+        {
+            "Number": "1234567890",
+            "Text": "Hello John, your order is ready!"
+        },
+        {
+            "Number": "0987654321",
+            "Text": "Hello Jane, your appointment is tomorrow at 2 PM"
+        }
+    ],
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.post(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Request Body
+
+<ParamField body="SenderId" type="string" required>
+  Approved sender ID for the messages
+</ParamField>
+
+<ParamField body="Messages" type="array" required>
+  Array of message objects
+</ParamField>
+
+<ParamField body="Messages[].Number" type="string" required>
+  Mobile number for the message
+</ParamField>
+
+<ParamField body="Messages[].Text" type="string" required>
+  Message text content
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+<ParamField body="Is_Unicode" type="boolean">
+  Set to `true` for Unicode messages (default: `false`)
+</ParamField>
+
+<ParamField body="Is_Flash" type="boolean">
+  Set to `true` for flash messages (default: `false`)
+</ParamField>
+
+<ParamField body="SchedTime" type="string">
+  Schedule time in `yyyy-MM-dd HH:MM` format (optional)
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="array">
+  Array of message results
+</ResponseField>
+
+<ResponseField name="Data[].MobileNumber" type="string">
+  Mobile number that received the message
+</ResponseField>
+
+<ResponseField name="Data[].MessageId" type="string">
+  Unique message ID for tracking
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": [
+    {
+      "MobileNumber": "7894561230",
+      "MessageId": "fc103131-5931-4530-ba8e-aa223c769536"
+    },
+    {
+      "MobileNumber": "7894561231",
+      "MessageId": "f893293d-d6ea-45e8-b543-40f0df28e0c9"
+    }
+  ]
+}
+```
+
+## Message Examples
+
+### Personalized Notifications
+```json
+{
+  "Messages": [
+    {
+      "Number": "1234567890",
+      "Text": "Hi John, your order #12345 has been shipped!"
+    },
+    {
+      "Number": "0987654321",
+      "Text": "Hi Sarah, your order #12346 is ready for pickup!"
+    }
+  ]
+}
+```
+
+### Appointment Reminders
+```json
+{
+  "Messages": [
+    {
+      "Number": "1234567890",
+      "Text": "Reminder: Your dental appointment is tomorrow at 10:00 AM"
+    },
+    {
+      "Number": "0987654321",
+      "Text": "Reminder: Your doctor appointment is tomorrow at 2:30 PM"
+    }
+  ]
+}
+```
+
+### Marketing Campaigns
+```json
+{
+  "Messages": [
+    {
+      "Number": "1234567890",
+      "Text": "Hi John! Get 20% off your next purchase. Use code: SAVE20"
+    },
+    {
+      "Number": "0987654321",
+      "Text": "Hi Sarah! New arrivals in your favorite category. Shop now!"
+    }
+  ]
+}
+```
+
+## Use Cases
+
+- **Personalized messaging**: Send different messages to different recipients
+- **Marketing campaigns**: Targeted messages for different customer segments
+- **Notifications**: Different notification types for different users
+- **Appointment reminders**: Personalized reminders with specific details
+- **Order updates**: Different status updates for different orders
+- **Event invitations**: Personalized invitations with different details
+
+## Best Practices
+
+1. **Batch size**: Keep batch sizes reasonable (100-500 messages per request)
+2. **Error handling**: Handle individual message failures gracefully
+3. **Rate limiting**: Respect API rate limits for bulk operations
+4. **Message validation**: Validate message content before sending
+5. **Personalization**: Use recipient data to personalize messages

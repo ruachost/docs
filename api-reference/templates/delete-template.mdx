@@ -1,0 +1,104 @@
+---
+title: "Delete Template"
+description: "Delete an existing message template"
+api: "DELETE /api/v2/Template"
+---
+
+## Delete Template
+
+Delete an existing message template from your account.
+
+<Warning>
+This action cannot be undone. The template will be permanently removed and cannot be used for future messages.
+</Warning>
+
+<CodeGroup>
+
+```bash cURL
+curl -X DELETE "https://accounts.netvox.ng/api/v2/Template?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&id=138"
+```
+
+```javascript JavaScript
+const params = new URLSearchParams({
+  ApiKey: 'YOUR_API_KEY',
+  ClientId: 'YOUR_CLIENT_ID',
+  id: '138'
+});
+
+const response = await fetch(`https://accounts.netvox.ng/api/v2/Template?${params}`, {
+  method: 'DELETE'
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/Template"
+params = {
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID",
+    "id": 138
+}
+
+response = requests.delete(url, params=params)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Parameters
+
+<ParamField query="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField query="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+<ParamField query="id" type="number" required>
+  ID of the template to delete
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "Template deleted Successfully."
+}
+```
+
+### Error Response
+
+```json
+{
+  "ErrorCode": 028,
+  "ErrorDescription": "Can not be found"
+}
+```
+
+## Use Cases
+
+- **Cleanup**: Remove unused or outdated templates
+- **Account management**: Clean up template list
+- **Compliance**: Remove templates that are no longer needed

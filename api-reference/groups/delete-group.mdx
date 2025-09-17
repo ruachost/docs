@@ -1,0 +1,104 @@
+---
+title: "Delete Group"
+description: "Delete an existing contact group"
+api: "DELETE /api/v2/Group"
+---
+
+## Delete Group
+
+Delete an existing contact group from your account.
+
+<Warning>
+This action cannot be undone. All contacts in the group will be removed from the group structure.
+</Warning>
+
+<CodeGroup>
+
+```bash cURL
+curl -X DELETE "https://accounts.netvox.ng/api/v2/Group?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&id=33"
+```
+
+```javascript JavaScript
+const params = new URLSearchParams({
+  ApiKey: 'YOUR_API_KEY',
+  ClientId: 'YOUR_CLIENT_ID',
+  id: '33'
+});
+
+const response = await fetch(`https://accounts.netvox.ng/api/v2/Group?${params}`, {
+  method: 'DELETE'
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/Group"
+params = {
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID",
+    "id": 33
+}
+
+response = requests.delete(url, params=params)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Parameters
+
+<ParamField query="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField query="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+<ParamField query="id" type="number" required>
+  ID of the group to delete
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "Group deleted successfully."
+}
+```
+
+### Error Response
+
+```json
+{
+  "ErrorCode": 028,
+  "ErrorDescription": "Can not be found"
+}
+```
+
+## Use Cases
+
+- **Group cleanup**: Remove unused or outdated groups
+- **Data management**: Clean up contact organization structure
+- **Account maintenance**: Remove groups that are no longer needed

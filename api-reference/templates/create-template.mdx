@@ -1,0 +1,143 @@
+---
+title: "Create Template"
+description: "Create a new message template"
+api: "POST /api/v2/Template"
+---
+
+## Create Template
+
+Create a new message template for reusable SMS content.
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://accounts.netvox.ng/api/v2/Template" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "TemplateName": "Welcome Message",
+    "MessageTemplate": "Welcome to ##CompanyName##! Your account ID is ##AccountId##. Thank you for joining us.",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/Template', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    TemplateName: 'Welcome Message',
+    MessageTemplate: 'Welcome to ##CompanyName##! Your account ID is ##AccountId##. Thank you for joining us.',
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/Template"
+data = {
+    "TemplateName": "Welcome Message",
+    "MessageTemplate": "Welcome to ##CompanyName##! Your account ID is ##AccountId##. Thank you for joining us.",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.post(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Request Body
+
+<ParamField body="TemplateName" type="string" required>
+  Name of the template
+</ParamField>
+
+<ParamField body="MessageTemplate" type="string" required>
+  Template content with placeholders using ##Field## format
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "Template Added successfully."
+}
+```
+
+## Template Placeholders
+
+Use `##FieldName##` format for dynamic content:
+
+### Common Placeholders
+- `##Name##` - Customer name
+- `##CompanyName##` - Company name
+- `##AccountId##` - Account identifier
+- `##Amount##` - Transaction amount
+- `##Date##` - Date
+- `##Time##` - Time
+- `##OTP##` - One-time password
+- `##Link##` - URL link
+
+### Template Examples
+
+#### Welcome Template
+```
+Welcome to ##CompanyName##! Your account ID is ##AccountId##. Thank you for joining us.
+```
+
+#### OTP Template
+```
+Your OTP is ##OTP##. Valid for 5 minutes. Do not share with anyone.
+```
+
+#### Payment Confirmation
+```
+Payment of ##Amount## received successfully on ##Date##. Transaction ID: ##TransactionId##
+```
+
+#### Appointment Reminder
+```
+Reminder: Your appointment with ##DoctorName## is scheduled for ##Date## at ##Time##.
+```
+
+## Use Cases
+
+- **Consistency**: Maintain consistent messaging across all communications
+- **Efficiency**: Save time by reusing approved templates
+- **Personalization**: Combine templates with dynamic data
+- **Compliance**: Use pre-approved templates for regulated content

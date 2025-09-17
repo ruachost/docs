@@ -1,0 +1,104 @@
+---
+title: "Delete Sender ID"
+description: "Delete an existing sender ID"
+api: "DELETE /api/v2/SenderId"
+---
+
+## Delete Sender ID
+
+Delete an existing sender ID from your account.
+
+<Warning>
+This action cannot be undone. The sender ID will be permanently removed and cannot be used for future messages.
+</Warning>
+
+<CodeGroup>
+
+```bash cURL
+curl -X DELETE "https://accounts.netvox.ng/api/v2/SenderId?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&id=94"
+```
+
+```javascript JavaScript
+const params = new URLSearchParams({
+  ApiKey: 'YOUR_API_KEY',
+  ClientId: 'YOUR_CLIENT_ID',
+  id: '94'
+});
+
+const response = await fetch(`https://accounts.netvox.ng/api/v2/SenderId?${params}`, {
+  method: 'DELETE'
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/SenderId"
+params = {
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID",
+    "id": 94
+}
+
+response = requests.delete(url, params=params)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Parameters
+
+<ParamField query="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField query="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+<ParamField query="id" type="number" required>
+  ID of the sender ID to delete
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "SenderId deleted Successfully."
+}
+```
+
+### Error Response
+
+```json
+{
+  "ErrorCode": 028,
+  "ErrorDescription": "Can not be found"
+}
+```
+
+## Use Cases
+
+- **Cleanup**: Remove unused or outdated sender IDs
+- **Account management**: Clean up sender ID list
+- **Compliance**: Remove sender IDs that are no longer needed

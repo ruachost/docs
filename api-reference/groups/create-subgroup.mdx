@@ -1,0 +1,106 @@
+---
+title: "Create Sub-Group"
+description: "Create a sub-group under an existing group"
+api: "POST /api/v2/Group/{Id}/SubGroup"
+---
+
+## Create Sub-Group
+
+Create a sub-group under an existing parent group for hierarchical organization.
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://accounts.netvox.ng/api/v2/Group/33/SubGroup" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "GroupName": "Sub Group Name",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/Group/33/SubGroup', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    GroupName: 'Sub Group Name',
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/Group/33/SubGroup"
+data = {
+    "GroupName": "Sub Group Name",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.post(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Path Parameters
+
+<ParamField path="Id" type="number" required>
+  ID of the parent group
+</ParamField>
+
+## Request Body
+
+<ParamField body="GroupName" type="string" required>
+  Name for the new sub-group
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "success#New Group added successfully."
+}
+```
+
+## Use Cases
+
+- **Hierarchical organization**: Create nested group structures
+- **Department organization**: Organize contacts by departments and teams
+- **Geographic grouping**: Create location-based sub-groups
+- **Campaign segmentation**: Create targeted sub-groups for specific campaigns

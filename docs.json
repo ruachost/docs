@@ -1,68 +1,90 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Ruach SMS API",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
+    "primary": "#03282b",
+    "light": "#10e7c5",
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Getting Started",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Introduction",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "index"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "API Reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Authentication",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/authentication"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Credit Balance",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/credit-balance"
+            ]
+          },
+          {
+            "group": "SMS Management",
+            "pages": [
+              "api-reference/sms/get-sent-messages",
+              "api-reference/sms/get-message-status",
+              "api-reference/sms/send-sms-get",
+              "api-reference/sms/send-sms-post",
+              "api-reference/sms/send-bulk-sms-get",
+              "api-reference/sms/send-bulk-sms-post"
+            ]
+          },
+          {
+            "group": "Group Management",
+            "pages": [
+              "api-reference/groups/get-groups",
+              "api-reference/groups/create-group",
+              "api-reference/groups/update-group",
+              "api-reference/groups/create-subgroup",
+              "api-reference/groups/delete-group"
+            ]
+          },
+          {
+            "group": "Sender ID Management",
+            "pages": [
+              "api-reference/sender-ids/get-sender-ids",
+              "api-reference/sender-ids/create-sender-id",
+              "api-reference/sender-ids/update-sender-id",
+              "api-reference/sender-ids/delete-sender-id"
+            ]
+          },
+          {
+            "group": "Template Management",
+            "pages": [
+              "api-reference/templates/get-templates",
+              "api-reference/templates/create-template",
+              "api-reference/templates/update-template",
+              "api-reference/templates/delete-template"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/webhooks/delivery-reports"
+            ]
+          },
+          {
+            "group": "Error Handling",
+            "pages": [
+              "api-reference/error-codes"
             ]
           }
         ]
@@ -71,57 +93,59 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Support",
+          "href": "mailto:support@ruach.ng",
+          "icon": "headset"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/ruach-light.png",
+    "dark": "/logo/ruach-dark.png"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@ruach.ng"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Get API Key",
+      "href": "mailto:support@ruach.ng"
     }
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/ruachost",
+      "linkedin": "https://linkedin.com/company/ruach-ng"
+    }
+  },
+  "api": {
+    "playground": {
+      "display": "none"
+    },
+    "examples": {
+      "languages": [
+        "curl",
+        "python",
+        "javascript"
+      ],
+      "defaults": "required"
     }
   }
 }

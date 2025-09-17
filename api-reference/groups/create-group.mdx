@@ -1,0 +1,109 @@
+---
+title: "Create Group"
+description: "Create a new contact group"
+api: "POST /api/v2/Group"
+---
+
+## Create Group
+
+Create a new contact group for organizing your contacts.
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://accounts.netvox.ng/api/v2/Group" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "GroupName": "New Group",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/Group', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    GroupName: 'New Group',
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/Group"
+data = {
+    "GroupName": "New Group",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.post(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Request Body
+
+<ParamField body="GroupName" type="string" required>
+  Name for the new group
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "success#New Group added successfully."
+}
+```
+
+### Error Response
+
+```json
+{
+  "ErrorCode": 027,
+  "ErrorDescription": "Already exist"
+}
+```
+
+## Use Cases
+
+- **Contact organization**: Create groups for different customer segments
+- **Targeted messaging**: Organize contacts for specific campaigns
+- **Bulk operations**: Manage large contact lists efficiently
+- **Integration**: Sync groups with your CRM or marketing platform

@@ -1,0 +1,200 @@
+---
+title: "Send SMS (POST)"
+description: "Send SMS messages using POST method with JSON payload"
+api: "POST /api/v2/SendSMS"
+---
+
+## Send SMS (POST)
+
+Send SMS messages using the POST method with a JSON request body. This method is recommended for sending messages with additional parameters.
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://accounts.netvox.ng/api/v2/SendSMS" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "SenderId": "YOUR_SENDER_ID",
+    "Is_Unicode": false,
+    "Is_Flash": false,
+    "SchedTime": "",
+    "GroupId": "",
+    "Message": "Hello from Ruach SMS API!",
+    "MobileNumbers": "1234567890,0987654321",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/SendSMS', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    SenderId: 'YOUR_SENDER_ID',
+    Is_Unicode: false,
+    Is_Flash: false,
+    SchedTime: '',
+    GroupId: '',
+    Message: 'Hello from Ruach SMS API!',
+    MobileNumbers: '1234567890,0987654321',
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/SendSMS"
+data = {
+    "SenderId": "YOUR_SENDER_ID",
+    "Is_Unicode": False,
+    "Is_Flash": False,
+    "SchedTime": "",
+    "GroupId": "",
+    "Message": "Hello from Ruach SMS API!",
+    "MobileNumbers": "1234567890,0987654321",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.post(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Request Body
+
+<ParamField body="SenderId" type="string" required>
+  Approved sender ID for the message
+</ParamField>
+
+<ParamField body="Message" type="string" required>
+  Text message content to send
+</ParamField>
+
+<ParamField body="MobileNumbers" type="string" required>
+  Comma-separated mobile numbers (e.g., "1234567890,0987654321")
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+<ParamField body="Is_Unicode" type="boolean">
+  Set to `true` for Unicode messages (default: `false`)
+</ParamField>
+
+<ParamField body="Is_Flash" type="boolean">
+  Set to `true` for flash messages (default: `false`)
+</ParamField>
+
+<ParamField body="SchedTime" type="string">
+  Schedule time in `yyyy-MM-dd HH:MM` format (optional)
+</ParamField>
+
+<ParamField body="GroupId" type="string">
+  Group ID for sending to a group (optional)
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="array">
+  Array of message results
+</ResponseField>
+
+<ResponseField name="Data[].MobileNumber" type="string">
+  Mobile number that received the message
+</ResponseField>
+
+<ResponseField name="Data[].MessageId" type="string">
+  Unique message ID for tracking
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": [
+    {
+      "MobileNumber": "7894561230",
+      "MessageId": "3bb944ad-d943-419f-83dc-f979002a8c0b"
+    }
+  ]
+}
+```
+
+### Error Response
+
+```json
+{
+  "ErrorCode": 003,
+  "ErrorDescription": "SenderId cannot be blank"
+}
+```
+
+## Message Types
+
+### Standard SMS
+```json
+{
+  "Is_Unicode": false,
+  "Is_Flash": false
+}
+```
+
+### Unicode SMS (for special characters)
+```json
+{
+  "Is_Unicode": true,
+  "Is_Flash": false
+}
+```
+
+### Flash SMS (appears on screen without saving)
+```json
+{
+  "Is_Unicode": false,
+  "Is_Flash": true
+}
+```
+
+## Scheduling Messages
+
+To schedule a message for later delivery:
+
+```json
+{
+  "SchedTime": "2024-12-25 10:00"
+}
+```
+
+## Use Cases
+
+- **Transactional messages**: Send OTPs, confirmations, and notifications
+- **Marketing campaigns**: Send promotional messages to multiple recipients
+- **Scheduled messaging**: Send messages at specific times
+- **Group messaging**: Send messages to entire contact groups

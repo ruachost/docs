@@ -1,0 +1,86 @@
+---
+title: "Authentication"
+description: "Learn how to authenticate with the Ruach SMS API"
+---
+
+## API Authentication
+
+The Ruach SMS API uses API key-based authentication. All requests require two authentication parameters:
+
+- **ApiKey**: Your unique API key
+- **ClientId**: Your client identifier
+
+## Base URL
+
+All API requests should be made to:
+```
+https://accounts.netvox.ng/api/v2/
+```
+
+## Authentication Methods
+
+### URL Parameters (Recommended for GET requests)
+
+Include your credentials as URL parameters:
+
+```bash
+curl -X GET "https://accounts.netvox.ng/api/v2/Balance?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID"
+```
+
+### Request Body (For POST/PUT requests)
+
+Include your credentials in the request body:
+
+```json
+{
+  "ApiKey": "YOUR_API_KEY",
+  "ClientId": "YOUR_CLIENT_ID",
+  "SenderId": "YOUR_SENDER_ID",
+  "Message": "Hello World",
+  "MobileNumbers": "1234567890"
+}
+```
+
+## Getting Your Credentials
+
+1. **Sign up** for a Ruach SMS API account
+2. **Navigate** to your dashboard
+3. **Generate** your API key and Client ID
+4. **Keep** your credentials secure and never share them publicly
+
+## Security Best Practices
+
+<Warning>
+Never expose your API credentials in client-side code or public repositories.
+</Warning>
+
+- Store credentials in environment variables
+- Use HTTPS for all API requests
+- Rotate your API keys regularly
+- Monitor your API usage for suspicious activity
+
+## Rate Limits
+
+The API has rate limits to ensure fair usage:
+
+- **Standard accounts**: 100 requests per minute
+- **Premium accounts**: 1000 requests per minute
+
+If you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
+
+## Error Responses
+
+Invalid or missing authentication will result in error responses:
+
+```json
+{
+  "ErrorCode": 001,
+  "ErrorDescription": "Account details cannot be blank"
+}
+```
+
+Common authentication error codes:
+- `001`: Account details cannot be blank
+- `007`: Invalid username or password
+- `008`: Account inactive
+- `010`: Unauthorized API access

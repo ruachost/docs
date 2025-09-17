@@ -1,0 +1,112 @@
+---
+title: "Update Sender ID"
+description: "Update an existing sender ID"
+api: "PUT /api/v2/SenderId"
+---
+
+## Update Sender ID
+
+Update the purpose or description of an existing sender ID.
+
+<CodeGroup>
+
+```bash cURL
+curl -X PUT "https://accounts.netvox.ng/api/v2/SenderId?id=94" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "SenderId": "YOURBRAND",
+    "Purpose": "Updated purpose description",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/SenderId?id=94', {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    SenderId: 'YOURBRAND',
+    Purpose: 'Updated purpose description',
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/SenderId?id=94"
+data = {
+    "SenderId": "YOURBRAND",
+    "Purpose": "Updated purpose description",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.put(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Parameters
+
+<ParamField query="id" type="number" required>
+  ID of the sender ID to update
+</ParamField>
+
+## Request Body
+
+<ParamField body="SenderId" type="string" required>
+  The sender ID text (cannot be changed, must match existing)
+</ParamField>
+
+<ParamField body="Purpose" type="string" required>
+  Updated purpose or description
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "SenderId updated Successfully."
+}
+```
+
+## Use Cases
+
+- **Purpose updates**: Change the description of your sender ID
+- **Documentation**: Keep sender ID purposes up to date
+- **Compliance**: Update sender ID information for regulatory requirements

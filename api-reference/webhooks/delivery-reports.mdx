@@ -1,0 +1,224 @@
+---
+title: "Delivery Reports (DLR)"
+description: "Set up webhooks to receive real-time delivery reports"
+---
+
+## HTTP Web Push DLR
+
+The Ruach SMS API supports HTTP web push delivery reports (DLR) to provide real-time status updates for your SMS messages.
+
+## Overview
+
+When HTTP Web push DLR is enabled, you can configure a webhook URL to receive delivery status updates in real-time. The system will send HTTP requests to your specified endpoint with delivery information.
+
+<Warning>
+If your webhook URL is not available during the transaction, the DLR will be discarded. The default timeout for webhook requests is 10 seconds.
+</Warning>
+
+## Webhook Configuration
+
+To enable webhook delivery reports:
+
+1. **Contact support** to enable DLR for your account
+2. **Provide your webhook URL** to receive delivery reports
+3. **Ensure your endpoint** responds with `200 OK` within 10 seconds
+
+## Webhook Request Format
+
+Each delivery report is sent as a GET request to your webhook URL with the following parameters:
+
+```
+http://yourdomain.com/webhook?doneDate={doneDate}&submitDate={submitDate}&errorCode={errorCode}&shortMessage={shortMessage}&status={status}&messageId={messageId}&mobile={mobile}
+```
+
+## Parameters
+
+<ParamField query="messageId" type="string" required>
+  Unique message ID of the SMS
+</ParamField>
+
+<ParamField query="mobile" type="string" required>
+  Mobile number that received the message
+</ParamField>
+
+<ParamField query="submitDate" type="string" required>
+  Date and time when the message was submitted
+</ParamField>
+
+<ParamField query="doneDate" type="string" required>
+  Date and time when the message was processed
+</ParamField>
+
+<ParamField query="status" type="string" required>
+  Current delivery status of the message
+</ParamField>
+
+<ParamField query="errorCode" type="string" required>
+  Error code (if any)
+</ParamField>
+
+<ParamField query="shortMessage" type="string" required>
+  The original message text
+</ParamField>
+
+## Delivery Status Values
+
+| Status | Description |
+|--------|-------------|
+| **DELIVRD** | Message successfully delivered |
+| **UNDELIV** | Message undelivered |
+| **EXPIRED** | Message expired |
+| **DELETED** | Message deleted |
+| **UNKNOWN** | Status unknown |
+| **ACCEPTD** | Message accepted by carrier |
+| **REJECTD** | Message rejected |
+| **BLACKLIST** | Number is blacklisted |
+
+## Example Webhook Implementation
+
+<CodeGroup>
+
+```javascript Node.js
+const express = require('express');
+const app = express();
+
+app.get('/webhook', (req, res) => {
+  const {
+    messageId,
+    mobile,
+    submitDate,
+    doneDate,
+    status,
+    errorCode,
+    shortMessage
+  } = req.query;
+
+  // Process the delivery report
+  console.log('Delivery Report:', {
+    messageId,
+    mobile,
+    submitDate,
+    doneDate,
+    status,
+    errorCode,
+    shortMessage
+  });
+
+  // Update your database or trigger actions based on status
+  if (status === 'DELIVRD') {
+    console.log(`Message ${messageId} delivered to ${mobile}`);
+  } else if (status === 'UNDELIV') {
+    console.log(`Message ${messageId} failed to deliver to ${mobile}`);
+  }
+
+  // Always respond with 200 OK
+  res.status(200).send('OK');
+});
+
+app.listen(3000, () => {
+  console.log('Webhook server running on port 3000');
+});
+```
+
+```python Python
+from flask import Flask, request
+import logging
+
+app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
+
+@app.route('/webhook', methods=['GET'])
+def delivery_report():
+    # Extract parameters
+    message_id = request.args.get('messageId')
+    mobile = request.args.get('mobile')
+    submit_date = request.args.get('submitDate')
+    done_date = request.args.get('doneDate')
+    status = request.args.get('status')
+    error_code = request.args.get('errorCode')
+    short_message = request.args.get('shortMessage')
+    
+    # Process the delivery report
+    logging.info(f'Delivery Report: {message_id} - {mobile} - {status}')
+    
+    # Update your database or trigger actions based on status
+    if status == 'DELIVRD':
+        logging.info(f'Message {message_id} delivered to {mobile}')
+    elif status == 'UNDELIV':
+        logging.info(f'Message {message_id} failed to deliver to {mobile}')
+    
+    # Always respond with 200 OK
+    return 'OK', 200
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=3000)
+```
+
+```php PHP
+<?php
+// webhook.php
+
+// Get the delivery report parameters
+$messageId = $_GET['messageId'] ?? '';
+$mobile = $_GET['mobile'] ?? '';
+$submitDate = $_GET['submitDate'] ?? '';
+$doneDate = $_GET['doneDate'] ?? '';
+$status = $_GET['status'] ?? '';
+$errorCode = $_GET['errorCode'] ?? '';
+$shortMessage = $_GET['shortMessage'] ?? '';
+
+// Log the delivery report
+error_log("Delivery Report: $messageId - $mobile - $status");
+
+// Process based on status
+if ($status === 'DELIVRD') {
+    error_log("Message $messageId delivered to $mobile");
+} elseif ($status === 'UNDELIV') {
+    error_log("Message $messageId failed to deliver to $mobile");
+}
+
+// Always respond with 200 OK
+http_response_code(200);
+echo 'OK';
+?>
+```
+
+</CodeGroup>
+
+## Best Practices
+
+### 1. Fast Response Time
+- Ensure your webhook endpoint responds within 10 seconds
+- Use asynchronous processing for heavy operations
+- Return `200 OK` immediately after receiving the request
+
+### 2. Idempotency
+- Handle duplicate webhook calls gracefully
+- Use messageId as a unique identifier
+- Implement proper deduplication logic
+
+### 3. Error Handling
+- Log all webhook requests for debugging
+- Implement retry logic for failed processing
+- Monitor webhook endpoint health
+
+### 4. Security
+- Validate webhook requests
+- Use HTTPS for your webhook endpoint
+- Implement authentication if needed
+
+## Testing Webhooks
+
+You can test your webhook endpoint using curl:
+
+```bash
+curl -X GET "http://yourdomain.com/webhook?messageId=test123&mobile=1234567890&submitDate=2024-01-01%2010:00:00&doneDate=2024-01-01%2010:00:05&status=DELIVRD&errorCode=0&shortMessage=Test%20message"
+```
+
+## Use Cases
+
+- **Real-time tracking**: Monitor message delivery status in real-time
+- **Analytics**: Track delivery rates and performance metrics
+- **Customer service**: Provide delivery confirmations to customers
+- **Retry logic**: Automatically retry failed messages
+- **Compliance**: Maintain delivery logs for regulatory requirements

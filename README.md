@@ -1,44 +1,62 @@
-# Mintlify Starter Kit
+# Ruach SMS API Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+This repository contains the complete documentation for the Ruach SMS API.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Overview
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+The Ruach SMS API provides a comprehensive solution for sending SMS messages, managing campaigns, and tracking delivery reports. This documentation covers all available endpoints, authentication methods, and integration examples.
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+## Features
+
+- **Complete API Reference**: All endpoints with examples in multiple languages
+- **Authentication Guide**: Step-by-step authentication setup
+- **Error Handling**: Comprehensive error codes and handling strategies
+- **Webhook Integration**: Real-time delivery report setup
+- **Code Examples**: Ready-to-use code samples in JavaScript, Python, PHP, and cURL
 
 ## Development
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally:
 
-```
+```bash
 npm i -g mint
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+Run the development server:
 
-```
+```bash
 mint dev
 ```
 
 View your local preview at `http://localhost:3000`.
 
-## Publishing changes
+## API Endpoints
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+### Core Features
+- **SMS Sending**: Send individual and bulk SMS messages
+- **Campaign Management**: Create and track SMS campaigns
+- **Group Management**: Organize contacts into groups
+- **Template System**: Create reusable message templates
+- **Sender ID Management**: Manage approved sender IDs
+- **Delivery Reports**: Real-time webhook notifications
 
-## Need help?
+### Authentication
+All API requests require:
+- `ApiKey`: Your unique API key
+- `ClientId`: Your client identifier
 
-### Troubleshooting
+## Publishing Changes
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+Changes are automatically deployed when pushed to the main branch. The documentation is hosted on Mintlify and updates in real-time.
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
-- [Mintlify community](https://mintlify.com/community)
+## Support
+
+For API support and questions:
+- **Email**: support@ruach.ng
+- **Documentation**: This site contains all the information you need
+- **Integration Help**: Contact our technical team for custom integrations
+
+## Resources
+
+- [Mintlify Documentation](https://mintlify.com/docs)
+- [Mintlify Community](https://mintlify.com/community)

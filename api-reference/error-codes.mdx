@@ -1,0 +1,174 @@
+---
+title: "Error Codes"
+description: "Complete list of API error codes and their meanings"
+---
+
+## Error Codes Reference
+
+The Ruach SMS API returns standardized error codes to help you understand and handle different response scenarios.
+
+## Success Codes
+
+| Code | Description |
+|------|-------------|
+| **0** | Success - Message successfully submitted |
+
+## Authentication & Account Errors
+
+| Code | Description |
+|------|-------------|
+| **001** | Account details cannot be blank |
+| **002** | Username or password cannot be blank |
+| **007** | Invalid API credentials (ApiKey or ClientId) |
+| **008** | Account inactive |
+| **009** | Account lock |
+| **010** | Unauthorized API access |
+| **011** | Unauthorized IP address |
+| **016** | Transactional account not active |
+| **030** | Account expired |
+
+## Message & Content Errors
+
+| Code | Description |
+|------|-------------|
+| **003** | SenderId cannot be blank |
+| **004** | Message cannot be blank |
+| **005** | Message properties cannot be blank |
+| **012** | Message length violation |
+| **013** | Invalid mobile numbers |
+| **014** | Account locked due to spam message contact support |
+| **015** | Invalid SenderId |
+| **020** | Message or mobile number cannot be blank |
+| **024** | Invalid template or template mismatch |
+| **025** | Cannot be blank or empty |
+| **038** | Spam Message |
+
+## Group & Template Errors
+
+| Code | Description |
+|------|-------------|
+| **017** | Invalid groupid |
+| **018** | Cannot send multi message to group |
+| **032** | Parent group doesn't exist |
+
+## System & Processing Errors
+
+| Code | Description |
+|------|-------------|
+| **006** | ServerError#Error message |
+| **019** | Invalid schedule date |
+| **021** | Insufficient credits |
+| **022** | Invalid jobid |
+| **023** | Parameter missing |
+| **026** | Invalid date range |
+| **033** | Queue Connection Closed |
+| **034** | Unable to create campaign at this time please try again later |
+| **040** | Error While Publishing DLR |
+| **041** | Report Not Found |
+
+## Data & Validation Errors
+
+| Code | Description |
+|------|-------------|
+| **027** | Already exist |
+| **028** | Can not be found |
+| **029** | Duplicate |
+
+## Gateway & Routing Errors
+
+| Code | Description |
+|------|-------------|
+| **031** | No gateway is assigned |
+| **101** | Message failed due to loss protection |
+| **801** | Country Undefined |
+| **802** | Invalid Country |
+| **803** | Message failed due to undefined price for gateway/user |
+| **804** | Message failed due to loss protection |
+| **805** | Message failed due to undefined route |
+
+## Error Response Format
+
+All error responses follow this standard format:
+
+```json
+{
+  "ErrorCode": 001,
+  "ErrorDescription": "Account details cannot be blank"
+}
+```
+
+## Handling Errors
+
+### Common Error Handling Patterns
+
+<CodeGroup>
+
+```javascript JavaScript
+try {
+  const response = await fetch('https://accounts.netvox.ng/api/v2/SendSMS', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestData)
+  });
+  
+  const result = await response.json();
+  
+  if (result.ErrorCode === 0) {
+    // Success
+    console.log('Message sent:', result.Data);
+  } else {
+    // Handle specific errors
+    switch (result.ErrorCode) {
+      case 001:
+        console.error('Authentication required');
+        break;
+      case 021:
+        console.error('Insufficient credits');
+        break;
+      case 015:
+        console.error('Invalid Sender ID');
+        break;
+      default:
+        console.error('Error:', result.ErrorDescription);
+    }
+  }
+} catch (error) {
+  console.error('Network error:', error);
+}
+```
+
+```python Python
+import requests
+
+try:
+    response = requests.post('https://accounts.netvox.ng/api/v2/SendSMS', json=request_data)
+    result = response.json()
+    
+    if result['ErrorCode'] == 0:
+        # Success
+        print('Message sent:', result['Data'])
+    else:
+        # Handle specific errors
+        error_code = result['ErrorCode']
+        if error_code == 001:
+            print('Authentication required')
+        elif error_code == 021:
+            print('Insufficient credits')
+        elif error_code == 015:
+            print('Invalid Sender ID')
+        else:
+            print('Error:', result['ErrorDescription'])
+            
+except requests.RequestException as e:
+    print('Network error:', e)
+```
+
+</CodeGroup>
+
+## Best Practices
+
+1. **Always check ErrorCode**: Never assume success without checking the error code
+2. **Handle common errors**: Implement specific handling for frequent errors (001, 021, 015)
+3. **Log errors**: Keep logs of error responses for debugging
+4. **Retry logic**: Implement retry logic for transient errors (033, 034)
+5. **User feedback**: Provide meaningful error messages to end users

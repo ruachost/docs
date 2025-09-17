@@ -1,0 +1,134 @@
+---
+title: "Create Sender ID"
+description: "Create a new sender ID for SMS messaging"
+api: "POST /api/v2/SenderId"
+---
+
+## Create Sender ID
+
+Create a new sender ID for your SMS messages. All sender IDs must be approved before they can be used.
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://accounts.netvox.ng/api/v2/SenderId" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "SenderId": "YOURBRAND",
+    "Purpose": "Marketing and notifications",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://accounts.netvox.ng/api/v2/SenderId', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    SenderId: 'YOURBRAND',
+    Purpose: 'Marketing and notifications',
+    ApiKey: 'YOUR_API_KEY',
+    ClientId: 'YOUR_CLIENT_ID'
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+url = "https://accounts.netvox.ng/api/v2/SenderId"
+data = {
+    "SenderId": "YOURBRAND",
+    "Purpose": "Marketing and notifications",
+    "ApiKey": "YOUR_API_KEY",
+    "ClientId": "YOUR_CLIENT_ID"
+}
+
+response = requests.post(url, json=data)
+result = response.json()
+print(result)
+```
+
+</CodeGroup>
+
+## Request Body
+
+<ParamField body="SenderId" type="string" required>
+  Valid sender ID (3-11 characters, alphanumeric only)
+</ParamField>
+
+<ParamField body="Purpose" type="string" required>
+  Purpose or description of the sender ID
+</ParamField>
+
+<ParamField body="ApiKey" type="string" required>
+  Your API key for authentication
+</ParamField>
+
+<ParamField body="ClientId" type="string" required>
+  Your client identifier for authentication
+</ParamField>
+
+## Response
+
+<ResponseField name="ErrorCode" type="number">
+  Error code (0 for success)
+</ResponseField>
+
+<ResponseField name="ErrorDescription" type="string">
+  Description of the result
+</ResponseField>
+
+<ResponseField name="Data" type="string">
+  Success message
+</ResponseField>
+
+### Success Response
+
+```json
+{
+  "ErrorCode": 0,
+  "ErrorDescription": "Success",
+  "Data": "Senderid Added successfully."
+}
+```
+
+### Error Response
+
+```json
+{
+  "ErrorCode": 027,
+  "ErrorDescription": "Already exist"
+}
+```
+
+## Sender ID Guidelines
+
+### Valid Sender IDs
+- **Alphanumeric only**: Letters and numbers
+- **Length**: 3-11 characters
+- **Examples**: `YOURBRAND`, `SMS123`, `COMPANY`
+
+### Invalid Sender IDs
+- Special characters: `@`, `#`, `$`, etc.
+- Spaces or punctuation
+- Too short (< 3 characters) or too long (> 11 characters)
+
+### Approval Process
+1. **Submit**: Create sender ID via API
+2. **Review**: Our team reviews the request
+3. **Approval**: Sender ID is approved for use
+4. **Activation**: Start using the approved sender ID
+
+## Use Cases
+
+- **Brand recognition**: Use your company name as sender ID
+- **Marketing campaigns**: Create branded sender IDs for campaigns
+- **Service notifications**: Use descriptive sender IDs for different services
+- **Compliance**: Ensure all sender IDs are properly approved
