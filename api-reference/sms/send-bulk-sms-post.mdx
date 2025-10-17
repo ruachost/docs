@@ -15,7 +15,7 @@ curl -X POST "https://accounts.netvox.ng/api/v2/SendBulkSMS" \
   -H "Content-Type: application/json" \
   -d '{
     "SenderId": "YOUR_SENDER_ID",
-    "Is_Unicode": false,
+    "Is_Unicode": true,
     "Is_Flash": false,
     "SchedTime": "",
     "Messages": [
@@ -69,7 +69,7 @@ import requests
 url = "https://accounts.netvox.ng/api/v2/SendBulkSMS"
 data = {
     "SenderId": "YOUR_SENDER_ID",
-    "Is_Unicode": False,
+    "Is_Unicode": True,
     "Is_Flash": False,
     "SchedTime": "",
     "Messages": [

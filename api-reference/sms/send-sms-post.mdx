@@ -15,7 +15,7 @@ curl -X POST "https://accounts.netvox.ng/api/v2/SendSMS" \
   -H "Content-Type: application/json" \
   -d '{
     "SenderId": "YOUR_SENDER_ID",
-    "Is_Unicode": false,
+    "Is_Unicode": true,
     "Is_Flash": false,
     "SchedTime": "",
     "GroupId": "",
@@ -55,7 +55,7 @@ import requests
 url = "https://accounts.netvox.ng/api/v2/SendSMS"
 data = {
     "SenderId": "YOUR_SENDER_ID",
-    "Is_Unicode": False,
+    "Is_Unicode": True,
     "Is_Flash": False,
     "SchedTime": "",
     "GroupId": "",
@@ -161,7 +161,7 @@ print(result)
 ### Standard SMS
 ```json
 {
-  "Is_Unicode": false,
+  "Is_Unicode": true,
   "Is_Flash": false
 }
 ```
@@ -177,7 +177,7 @@ print(result)
 ### Flash SMS (appears on screen without saving)
 ```json
 {
-  "Is_Unicode": false,
+  "Is_Unicode": true,
   "Is_Flash": true
 }
 ```
