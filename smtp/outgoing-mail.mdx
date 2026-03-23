@@ -129,24 +129,6 @@ public class SendMail {
 }
 ```
 
-```bash cURL
-# Message body must be a valid RFC 822 file (headers + blank line + body).
-# Port 587: curl negotiates STARTTLS when the server supports it.
-cat <<'EOF' > /tmp/email.txt
-From: Sender Name <sender@yourdomain.com>
-To: recipient@example.com
-Subject: Test message
-
-Hello from Ruach SMTP.
-EOF
-
-curl -sS --url 'smtp://delivery.emailpnl.com:587' \
-  --user 'SMTP_USERNAME:SMTP_PASSWORD' \
-  --mail-from 'sender@yourdomain.com' \
-  --mail-rcpt 'recipient@example.com' \
-  --upload-file /tmp/email.txt
-```
-
 </CodeGroup>
 
 **Alternative:** use port **465** with implicit TLS (`SSL/TLS`) in your client or library instead of STARTTLS on port 587. Match the security mode to the port as in the table below.
