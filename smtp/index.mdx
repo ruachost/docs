@@ -1,0 +1,56 @@
+---
+title: "Introduction"
+description: "Ruach Email Delivery over SMTP - overview, enterprise use cases, and why to use dedicated outbound mail."
+---
+
+## Overview
+
+Ruach Email Delivery is built for organizations that send high volumes of email over SMTP - transactional notifications, system alerts, and customer-facing campaigns - with infrastructure tuned for deliverability and operational control.
+
+Connect from your applications, services, and mail clients using standard SMTP. Configuration and administration are available in the **Ruach Control Panel**.
+
+### What is an SMTP server?
+
+SMTP (Simple Mail Transfer Protocol) moves email between mail servers. Sending large volumes from a generic mailbox often leads to throttling, poor deliverability, or spam classification.
+
+### Service advantages
+
+Ruach Email Delivery is designed for operational clarity and sender reputation at scale:
+
+- Each organization's sending reputation is isolated from other tenants without requiring a dedicated IP.
+- Dedicated sending reputation and suppression lists per account.
+- Sending pools aligned to your traffic profile.
+- Multiple accounts for separate brands or environments, managed from the Control Panel.
+- **Transactional credentials** - Use SMTP credentials issued for transactional sending **only** for transactional mail (for example order confirmations, password resets, and system alerts). Sending marketing or bulk promotional mail through those credentials can damage reputation signals and **deliverability**. Use credentials and paths intended for promotional or campaign mail when the Control Panel separates them.
+
+### Why enterprises choose Ruach Email Delivery
+
+- **Pools and reputation** - Sending pools matched to workload; reputation separated from other customers.
+- **Deliverability** - Built for strong inbox placement while discouraging abuse and supporting compliant, quality sends.
+- **Support** - The Ruach team can assist with deliverability and integration questions.
+- **Reliability** - We operate the sending platform and focus on consistent quality at high volume.
+- **Control Panel** - Manage accounts, authorised sending domains, reputation, and suppression lists.
+
+## Who this is for
+
+Ruach Email Delivery fits **enterprise and mid-market teams** that need a dependable outbound SMTP path integrated into internal systems, SaaS products, and customer-facing applications.
+
+Typical use cases include:
+
+- **Transactional mail** - Order and shipment updates, password resets, security alerts, and account notifications from core business systems.
+- **Internal and operational email** - Billing, ERP, ITSM, monitoring, and workflow tools that relay through SMTP.
+- **B2B and regulated environments** - Organizations that need predictable delivery behaviour, audit-friendly configuration, and clear separation of brands or business units.
+- **Marketing and lifecycle** - Newsletters and campaigns sent from your own applications, with governance aligned to your policies.
+
+<Card
+  title="Outgoing mail"
+  icon="paper-plane"
+  href="/smtp/outgoing-mail"
+  horizontal
+>
+  Programmatic sending (curl and common languages), SMTP connection parameters, and desktop email client setup.
+</Card>
+
+## Contact
+
+For sales and onboarding: [contact@ruach.ng](mailto:contact@ruach.ng).

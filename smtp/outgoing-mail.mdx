@@ -1,0 +1,177 @@
+---
+title: "Send Email"
+description: "Send email through Ruach SMTP - programmatic examples, connection parameters, and mail client configuration."
+---
+
+For product overview and use cases, see [SMTP email](/smtp).
+
+## Send email programmatically
+
+Use the same **hostname**, **ports**, **TLS mode**, and **credentials** as in [SMTP connection parameters](#smtp-connection-parameters) below. Replace placeholders with values from the Ruach Control Panel and your approved sender domain.
+
+**Transactional credentials** must be used **only** for transactional messages. Routing newsletters, cold outreach, or other promotional mail through transactional credentials undermines engagement and reputation and can reduce **deliverability**. Keep promotional sends on the credentials or accounts your team provisions for that purpose.
+
+<CodeGroup>
+
+```javascript JavaScript
+// npm install nodemailer
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  host: "delivery.emailpnl.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "SMTP_USERNAME",
+    pass: "SMTP_PASSWORD",
+  },
+});
+
+await transporter.sendMail({
+  from: "Sender Name <sender@yourdomain.com>",
+  to: "recipient@example.com",
+  subject: "Test message",
+  text: "Hello from Ruach SMTP.",
+});
+```
+
+```python Python
+import smtplib
+from email.message import EmailMessage
+
+msg = EmailMessage()
+msg["Subject"] = "Test message"
+msg["From"] = "Sender Name <sender@yourdomain.com>"
+msg["To"] = "recipient@example.com"
+msg.set_content("Hello from Ruach SMTP.")
+
+with smtplib.SMTP("delivery.emailpnl.com", 587) as smtp:
+    smtp.starttls()
+    smtp.login("SMTP_USERNAME", "SMTP_PASSWORD")
+    smtp.send_message(msg)
+```
+
+```go Go
+package main
+
+import (
+	"net/smtp"
+)
+
+func main() {
+	auth := smtp.PlainAuth("", "SMTP_USERNAME", "SMTP_PASSWORD", "delivery.emailpnl.com")
+	to := []string{"recipient@example.com"}
+	body := "From: sender@yourdomain.com\r\n" +
+		"To: recipient@example.com\r\n" +
+		"Subject: Test message\r\n" +
+		"\r\n" +
+		"Hello from Ruach SMTP.\r\n"
+	err := smtp.SendMail("delivery.emailpnl.com:587", auth, "sender@yourdomain.com", to, []byte(body))
+	if err != nil {
+		panic(err)
+	}
+}
+```
+
+```php PHP
+// composer require phpmailer/phpmailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
+$mail = new PHPMailer(true);
+$mail->isSMTP();
+$mail->Host = 'delivery.emailpnl.com';
+$mail->SMTPAuth = true;
+$mail->Username = 'SMTP_USERNAME';
+$mail->Password = 'SMTP_PASSWORD';
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+$mail->Port = 587;
+
+$mail->setFrom('sender@yourdomain.com', 'Sender Name');
+$mail->addAddress('recipient@example.com');
+$mail->Subject = 'Test message';
+$mail->Body = 'Hello from Ruach SMTP.';
+
+$mail->send();
+```
+
+```java Java
+// jakarta.mail (JavaMail) on the classpath
+import java.util.Properties;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
+
+public class SendMail {
+  public static void main(String[] args) throws Exception {
+    Properties p = new Properties();
+    p.put("mail.smtp.host", "delivery.emailpnl.com");
+    p.put("mail.smtp.port", "587");
+    p.put("mail.smtp.auth", "true");
+    p.put("mail.smtp.starttls.enable", "true");
+
+    Session session = Session.getInstance(p, new Authenticator() {
+      @Override
+      protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication("SMTP_USERNAME", "SMTP_PASSWORD");
+      }
+    });
+
+    Message m = new MimeMessage(session);
+    m.setFrom(new InternetAddress("sender@yourdomain.com", "Sender Name"));
+    m.setRecipients(Message.RecipientType.TO, InternetAddress.parse("recipient@example.com"));
+    m.setSubject("Test message");
+    m.setText("Hello from Ruach SMTP.");
+
+    Transport.send(m);
+  }
+}
+```
+
+```bash cURL
+# Message body must be a valid RFC 822 file (headers + blank line + body).
+# Port 587: curl negotiates STARTTLS when the server supports it.
+cat <<'EOF' > /tmp/email.txt
+From: Sender Name <sender@yourdomain.com>
+To: recipient@example.com
+Subject: Test message
+
+Hello from Ruach SMTP.
+EOF
+
+curl -sS --url 'smtp://delivery.emailpnl.com:587' \
+  --user 'SMTP_USERNAME:SMTP_PASSWORD' \
+  --mail-from 'sender@yourdomain.com' \
+  --mail-rcpt 'recipient@example.com' \
+  --upload-file /tmp/email.txt
+```
+
+</CodeGroup>
+
+**Alternative:** use port **465** with implicit TLS (`SSL/TLS`) in your client or library instead of STARTTLS on port 587. Match the security mode to the port as in the table below.
+
+## SMTP connection parameters
+
+| Parameter | Value |
+| --- | --- |
+| Description | We recommend the description you chose when your account was created. |
+| Hostname or server name | `delivery.emailpnl.com` |
+| Port | 587 or 25 with STARTTLS encryption, or 465 with SSL/TLS encryption. |
+| Connection security | STARTTLS (with port 587 or 25) or SSL/TLS (with port 465). |
+| Authentication method | Normal password |
+| User name | The username provided by us. |
+| Password | The password provided by us |
+
+## Configure your email client
+
+Use the following host and ports:
+
+- **Host:** `delivery.emailpnl.com`
+- **Ports:** **587** or **25** with **STARTTLS**, or **465** with **SSL/TLS**
+
+In most email clients, open **Account Settings**, then **Outgoing Server (SMTP)**.
+
+In other applications, find the section for **email sending** or **SMTP server** configuration.
+
+Add an outgoing server and set the fields using the table above.
