@@ -20,13 +20,6 @@
             ]
           },
           {
-            "group": "SMS Web GUI",
-            "pages": [
-              "sms-web-gui-intro",
-              "platform-navigation"
-            ]
-          },
-          {
             "group": "SMTP Email",
             "pages": [
               "smtp/index",
