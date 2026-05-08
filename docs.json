@@ -92,25 +92,13 @@
           {
             "group": "Webhooks",
             "pages": [
-              "api-reference/webhooks/delivery-reports",
-              "api-reference/ussd/ussd-session-webhook"
+              "api-reference/webhooks/delivery-reports"
             ]
           },
           {
             "group": "Error Handling",
             "pages": [
               "api-reference/error-codes"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Dashboard Walkthrough",
-        "groups": [
-          {
-            "group": "Dashboard Walkthrough",
-            "pages": [
-              "dashboard-walkthrough"
             ]
           }
         ]
