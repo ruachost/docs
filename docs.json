@@ -4,8 +4,8 @@
   "name": "Ruach Docs",
   "colors": {
     "primary": "#0269ff",
-    "light": "#10e7c5",
-    "dark": "#15803D"
+    "light": "#0269ff",
+    "dark": "#0269ff"
   },
   "favicon": "/favicon.ico",
   "navigation": {
