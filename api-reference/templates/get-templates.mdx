@@ -11,7 +11,7 @@ Retrieve a list of all message templates in your account.
 <CodeGroup>
 
 ```bash cURL
-curl -X GET "https://accounts.netvox.ng/api/v2/Template?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID" \
+curl -X GET "https://app.notify.ng/api/v2/Template?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID" \
   -H "Content-Type: application/json"
 ```
 
@@ -21,7 +21,7 @@ const params = new URLSearchParams({
   ClientId: 'YOUR_CLIENT_ID'
 });
 
-const response = await fetch(`https://accounts.netvox.ng/api/v2/Template?${params}`, {
+const response = await fetch(`https://app.notify.ng/api/v2/Template?${params}`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ console.log(data);
 ```python Python
 import requests
 
-url = "https://accounts.netvox.ng/api/v2/Template"
+url = "https://app.notify.ng/api/v2/Template"
 params = {
     "ApiKey": "YOUR_API_KEY",
     "ClientId": "YOUR_CLIENT_ID"

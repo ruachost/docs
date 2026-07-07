@@ -65,13 +65,13 @@ The Ruach SMS API provides a comprehensive solution for sending SMS messages, ma
 All API requests require authentication using your `ApiKey` and `ClientId`:
 
 ```bash
-curl -X GET "https://accounts.netvox.ng/api/v2/Balance?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID"
+curl -X GET "https://app.notify.ng/api/v2/Balance?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID"
 ```
 
 ### 2. Send Your First SMS
 
 ```bash
-curl -X POST "https://accounts.netvox.ng/api/v2/SendSMS" \
+curl -X POST "https://app.notify.ng/api/v2/SendSMS" \
   -H "Content-Type: application/json" \
   -d '{
     "ApiKey": "YOUR_API_KEY",
@@ -85,7 +85,7 @@ curl -X POST "https://accounts.netvox.ng/api/v2/SendSMS" \
 ### 3. Check Delivery Status
 
 ```bash
-curl -X GET "https://accounts.netvox.ng/api/v2/MessageStatus?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&MessageId=MESSAGE_ID"
+curl -X GET "https://app.notify.ng/api/v2/MessageStatus?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&MessageId=MESSAGE_ID"
 ```
 
 ## API Endpoints

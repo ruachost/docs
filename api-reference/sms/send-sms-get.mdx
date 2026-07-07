@@ -11,7 +11,7 @@ Send SMS messages using the GET method with URL parameters. This method is usefu
 <CodeGroup>
 
 ```bash cURL
-curl -X GET "https://accounts.netvox.ng/api/v2/SendSMS?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&SenderId=YOUR_SENDER_ID&Message=Hello%20World&MobileNumber=1234567890&Is_Unicode=false&Is_Flash=false"
+curl -X GET "https://app.notify.ng/api/v2/SendSMS?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&SenderId=YOUR_SENDER_ID&Message=Hello%20World&MobileNumber=1234567890&Is_Unicode=false&Is_Flash=false"
 ```
 
 ```javascript JavaScript
@@ -25,7 +25,7 @@ const params = new URLSearchParams({
   Is_Flash: 'false'
 });
 
-const response = await fetch(`https://accounts.netvox.ng/api/v2/SendSMS?${params}`, {
+const response = await fetch(`https://app.notify.ng/api/v2/SendSMS?${params}`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ console.log(data);
 import requests
 from urllib.parse import urlencode
 
-url = "https://accounts.netvox.ng/api/v2/SendSMS"
+url = "https://app.notify.ng/api/v2/SendSMS"
 params = {
     "ApiKey": "YOUR_API_KEY",
     "ClientId": "YOUR_CLIENT_ID",

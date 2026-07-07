@@ -11,7 +11,7 @@ Create a new contact group for organizing your contacts.
 <CodeGroup>
 
 ```bash cURL
-curl -X POST "https://accounts.netvox.ng/api/v2/Group" \
+curl -X POST "https://app.notify.ng/api/v2/Group" \
   -H "Content-Type: application/json" \
   -d '{
     "GroupName": "New Group",
@@ -21,7 +21,7 @@ curl -X POST "https://accounts.netvox.ng/api/v2/Group" \
 ```
 
 ```javascript JavaScript
-const response = await fetch('https://accounts.netvox.ng/api/v2/Group', {
+const response = await fetch('https://app.notify.ng/api/v2/Group', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ console.log(data);
 ```python Python
 import requests
 
-url = "https://accounts.netvox.ng/api/v2/Group"
+url = "https://app.notify.ng/api/v2/Group"
 data = {
     "GroupName": "New Group",
     "ApiKey": "YOUR_API_KEY",

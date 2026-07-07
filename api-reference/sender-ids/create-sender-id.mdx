@@ -11,7 +11,7 @@ Create a new sender ID for your SMS messages. All sender IDs must be approved be
 <CodeGroup>
 
 ```bash cURL
-curl -X POST "https://accounts.netvox.ng/api/v2/SenderId" \
+curl -X POST "https://app.notify.ng/api/v2/SenderId" \
   -H "Content-Type: application/json" \
   -d '{
     "SenderId": "YOURBRAND",
@@ -22,7 +22,7 @@ curl -X POST "https://accounts.netvox.ng/api/v2/SenderId" \
 ```
 
 ```javascript JavaScript
-const response = await fetch('https://accounts.netvox.ng/api/v2/SenderId', {
+const response = await fetch('https://app.notify.ng/api/v2/SenderId', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ console.log(data);
 ```python Python
 import requests
 
-url = "https://accounts.netvox.ng/api/v2/SenderId"
+url = "https://app.notify.ng/api/v2/SenderId"
 data = {
     "SenderId": "YOURBRAND",
     "Purpose": "Marketing and notifications",

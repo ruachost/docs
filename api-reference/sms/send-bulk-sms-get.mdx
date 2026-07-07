@@ -11,7 +11,7 @@ Send bulk SMS messages using the GET method with encoded message parameters. Thi
 <CodeGroup>
 
 ```bash cURL
-curl -X GET "https://accounts.netvox.ng/api/v2/SendBulkSMS?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&SenderId=YOUR_SENDER_ID&MobileNumber_Message=1234567890%5EHello%20John%7E0987654321%5EHello%20Jane&Is_Unicode=false&Is_Flash=false"
+curl -X GET "https://app.notify.ng/api/v2/SendBulkSMS?ApiKey=YOUR_API_KEY&ClientId=YOUR_CLIENT_ID&SenderId=YOUR_SENDER_ID&MobileNumber_Message=1234567890%5EHello%20John%7E0987654321%5EHello%20Jane&Is_Unicode=false&Is_Flash=false"
 ```
 
 ```javascript JavaScript
@@ -28,7 +28,7 @@ const params = new URLSearchParams({
   Is_Flash: 'false'
 });
 
-const response = await fetch(`https://accounts.netvox.ng/api/v2/SendBulkSMS?${params}`, {
+const response = await fetch(`https://app.notify.ng/api/v2/SendBulkSMS?${params}`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ from urllib.parse import quote
 bulk_message = "1234567890^Hello John~0987654321^Hello Jane"
 encoded_bulk_message = quote(bulk_message)
 
-url = "https://accounts.netvox.ng/api/v2/SendBulkSMS"
+url = "https://app.notify.ng/api/v2/SendBulkSMS"
 params = {
     "ApiKey": "YOUR_API_KEY",
     "ClientId": "YOUR_CLIENT_ID",

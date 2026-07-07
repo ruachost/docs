@@ -11,7 +11,7 @@ Send SMS messages using the POST method with a JSON request body. This method is
 <CodeGroup>
 
 ```bash cURL
-curl -X POST "https://accounts.netvox.ng/api/v2/SendSMS" \
+curl -X POST "https://app.notify.ng/api/v2/SendSMS" \
   -H "Content-Type: application/json" \
   -d '{
     "SenderId": "YOUR_SENDER_ID",
@@ -25,7 +25,7 @@ curl -X POST "https://accounts.netvox.ng/api/v2/SendSMS" \
 ```
 
 ```javascript JavaScript
-const response = await fetch('https://accounts.netvox.ng/api/v2/SendSMS', {
+const response = await fetch('https://app.notify.ng/api/v2/SendSMS', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ console.log(data);
 ```python Python
 import requests
 
-url = "https://accounts.netvox.ng/api/v2/SendSMS"
+url = "https://app.notify.ng/api/v2/SendSMS"
 data = {
     "SenderId": "YOUR_SENDER_ID",
     "Is_Unicode": True,

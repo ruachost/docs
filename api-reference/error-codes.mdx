@@ -105,7 +105,7 @@ All error responses follow this standard format:
 
 ```javascript JavaScript
 try {
-  const response = await fetch('https://accounts.netvox.ng/api/v2/SendSMS', {
+  const response = await fetch('https://app.notify.ng/api/v2/SendSMS', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(requestData)
@@ -141,7 +141,7 @@ try {
 import requests
 
 try:
-    response = requests.post('https://accounts.netvox.ng/api/v2/SendSMS', json=request_data)
+    response = requests.post('https://app.notify.ng/api/v2/SendSMS', json=request_data)
     result = response.json()
     
     if result['ErrorCode'] == 0:

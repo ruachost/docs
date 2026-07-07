@@ -133,7 +133,7 @@
     "primary": {
       "type": "button",
       "label": "Get API Key",
-      "href": "mailto:support@ruach.ng"
+      "href": "mailto:contact@ruach.ng?subject=API%20Key%20Request&body=Hello%20Ruach%20Support%20Team%2C%0A%0AI%20would%20like%20to%20request%20an%20API%20key%20to%20access%20the%20Notify.ng%20API.%0A%0APlease%20find%20my%20details%20below%3A%0A%0ABusiness%20/%20Account%20Name%3A%0ARegistered%20Email%3A%0APhone%20Number%3A%0AService%28s%29%20Required%20%28SMS%20/%20Email%20/%20Voice%29%3A%0AEstimated%20Monthly%20Volume%3A%0AIntended%20Use%20Case%3A%0A%0AThank%20you."
     }
   },
   "contextual": {

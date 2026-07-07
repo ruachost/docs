@@ -11,7 +11,7 @@ Create a new message template for reusable SMS content.
 <CodeGroup>
 
 ```bash cURL
-curl -X POST "https://accounts.netvox.ng/api/v2/Template" \
+curl -X POST "https://app.notify.ng/api/v2/Template" \
   -H "Content-Type: application/json" \
   -d '{
     "TemplateName": "Welcome Message",
@@ -22,7 +22,7 @@ curl -X POST "https://accounts.netvox.ng/api/v2/Template" \
 ```
 
 ```javascript JavaScript
-const response = await fetch('https://accounts.netvox.ng/api/v2/Template', {
+const response = await fetch('https://app.notify.ng/api/v2/Template', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ console.log(data);
 ```python Python
 import requests
 
-url = "https://accounts.netvox.ng/api/v2/Template"
+url = "https://app.notify.ng/api/v2/Template"
 data = {
     "TemplateName": "Welcome Message",
     "MessageTemplate": "Welcome to ##CompanyName##! Your account ID is ##AccountId##. Thank you for joining us.",
