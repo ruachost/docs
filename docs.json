@@ -92,7 +92,8 @@
           {
             "group": "Error Handling",
             "pages": [
-              "api-reference/error-codes"
+              "api-reference/error-codes",
+              "api-reference/standard-smpp-error-code-list"
             ]
           }
         ]
