@@ -30,7 +30,7 @@
       },
       {
         "tab": "API Reference",
-        "groups": [
+        "pages": [
           {
             "group": "Authentication",
             "pages": [
@@ -94,7 +94,8 @@
             "pages": [
               "api-reference/error-codes"
             ]
-          }
+          },
+          "standard-smpp-error-code-list"
         ]
       },
       {
