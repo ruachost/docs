@@ -1,0 +1,146 @@
+---
+title: "Standard SMPP Error Code List"
+---
+
+Includes standard SMPP, and Ruach HTTP GW error codes. Four newly added codes (1048, 1049, 1079, 1080) are inserted in numeric series and highlighted.
+
+## Standard SMPP Error Codes
+
+| Sr No | Error Code (Hex) | Error Code (Decimal) | Error Name | Error Description |
+| --- | --- | --- | --- | --- |
+| 1 | 0 | 0 | Command executed successfully |  |
+| 2 | 1 | 1 | Message Length is invalid |  |
+| 3 | 2 | 2 | Command Length is invalid |  |
+| 4 | 3 | 3 | Invalid Command ID |  |
+| 5 | 4 | 4 | Incorrect BIND Status for given command |  |
+| 6 | 5 | 5 | ESME Already in Bound State |  |
+| 7 | 6 | 6 | Invalid Priority Flag |  |
+| 8 | 7 | 7 | Invalid Registered Delivery Flag |  |
+| 9 | 8 | 8 | System Error |  |
+| 10 | 10 | 10 | Invalid Source Address |  |
+| 11 | 11 | 11 | Invalid Destination Address |  |
+| 12 | 12 | 12 | Message ID is invalid |  |
+| 13 | 13 | 13 | Bind Failed |  |
+| 14 | 14 | 14 | Invalid Password |  |
+| 15 | 15 | 15 | Invalid System ID |  |
+| 16 | 0x11 | 17 | Cancel SM Failed |  |
+| 17 | 0x13 | 19 | Replace SM Failed |  |
+| 18 | 0x15 | 21 | Invalid Service Type |  |
+| 19 | 0x33 | 51 | Invalid number of destinations |  |
+| 20 | 0x34 | 52 | Invalid Distribution List name |  |
+| 21 | 0x40 | 64 | Destination flag is invalid (submit\_multi) |  |
+| 22 | 0x42 | 66 | Submit w/replace functionality has been requested where it is either unsupported or inappropriate for the particular MC |  |
+| 23 | 0x43 | 67 | Invalid esm\_class field data |  |
+| 24 | 0x44 | 68 | Cannot Submit to Distribution List |  |
+| 25 | 0x45 | 69 | submit\_sm, data\_sm or submit\_multi failed |  |
+| 26 | 0x48 | 72 | Invalid Source address TON |  |
+| 27 | 0x49 | 73 | Invalid Source address NPI |  |
+| 28 | 0x51 | 81 | Invalid Destination address NPI |  |
+| 29 | 0x53 | 83 | Invalid system\_type field |  |
+| 30 | 0x54 | 84 | Invalid replace\_if\_present flag |  |
+| 31 | 0x55 | 85 | Invalid number of messages |  |
+| 32 | 0x58 | 88 | Throttling error (ESME has exceeded allowed message limits) |  |
+| 33 | 0x61 | 97 | Invalid Scheduled Delivery Time |  |
+| 34 | 0x62 | 98 | Invalid message validity period (Expiry time) |  |
+| 35 | 0x63 | 99 | Predefined Message ID is Invalid or specified predefined message was not found |  |
+| 36 | 0x65 | 101 | ESME Receiver Permanent App Error Code |  |
+| 37 | 0x66 | 102 | ESME Receiver Reject Message Error Code |  |
+| 38 | 0x67 | 103 | Query\_Sm request failed |  |
+| 39 | 0xc0 | 192 | Error in the optional part of the PDU Body |  |
+| 40 | 0xc1 | 193 | TLV not allowed |  |
+| 41 | 0xc2 | 194 | Invalid Parameter Length |  |
+| 42 | 0xc3 | 195 | Expected TLV missing |  |
+| 43 | 0xc4 | 196 | Invalid TLV Value |  |
+| 44 | 0xfe | 254 | Transaction Delivery Failure |  |
+| 45 | 0xff | 255 | Unknown Error |  |
+| 46 | 0x100 | 256 | ESME Not authorized to use specified service type |  |
+| 47 | 0x101 | 257 | ESME Prohibited from using specified operation (ESME BLACKLIST RULE) |  |
+| 48 | 0x102 | 258 | Specified service type is unavailable |  |
+| 49 | 0x103 | 259 | Specified service type is denied |  |
+| 50 | 0x105 | 261 | Source Address Sub unit is Invalid |  |
+| 51 | 0x106 | 262 | Destination Address Sub unit is Invalid |  |
+| 52 | 0x107 | 263 | Broadcast Frequency Interval is invalid |  |
+| 53 | 0x108 | 264 | Broadcast Alias Name is invalid |  |
+| 54 | 0x109 | 265 | Broadcast Area Format is invalid |  |
+| 55 | 0x10a | 266 | Number of Broadcast Areas is invalid |  |
+| 56 | 0x10b | 267 | Broadcast Content Type is invalid |  |
+| 57 | 0x10c | 268 | Broadcast Message Class is invalid |  |
+| 58 | 0x10d | 269 | Broadcast\_sm operation failed |  |
+| 59 | 0x10f | 271 | Cancel\_broadcast\_sm operation failed |  |
+| 60 | 0x110 | 272 | Number of Repeated Broadcasts is invalid |  |
+| 61 | 0x111 | 273 | Broadcast Service Group is invalid |  |
+| 62 | 0x112 | 274 | Broadcast Channel Indicator is invalid |  |
+| 63 | 0x15f95 | 90005 | Local Exception. Check LastException property |  |
+
+## Switch Error Codes
+
+| Sr No | Error Code (Hex) | Error Code (Decimal) | Error Name | Error Description |
+| --- | --- | --- | --- | --- |
+| 64 | 0x437 (new) | 1079 (new) | Primary Gateway Is In Inactive State (Disabled). |  |
+| 65 | 0x438 (new) | 1080 (new) | Global Failover Gateway is in Inactive State. |  |
+| 66 | 439 | 1081 | Country Undef |  |
+| 67 | 43A | 1082 | Invalid Network |  |
+| 68 | 43B | 1083 | Price Undefined | Pricing not defined By admin for respective country and network on the primary gateway |
+| 69 | 43C | 1084 | Expired (Loss Protection) | Message Undelivered due to Loss Protection |
+| 70 | 43D | 1085 | Route undef | Routing not defined By admin for respective country and network |
+| 71 | 43E | 1086 | Failover Route Undef | Master failover not defined by admin for respective country and network |
+| 72 | 43F | 1087 | Failover expired | Message Undelivered due to Loss Protection On failover gateway |
+| 73 | 440 | 1088 | Failover Price Undef | Pricing not defined By admin for respective country and network on failover gateway |
+| 74 | 441 | 1089 | Failover Failed | System Error : Unhandled exception during failover routing |
+| 75 | 442 | 1090 | Account Validity Expired |  |
+| 76 | 443 | 1091 | Encoding error (Can be regenerated by sending data coding values except 0 & 8) | System Error : Encoding error due to unexpected data coding value |
+| 77 | 444 | 1092 | OA/DA Error | System Error : OA/DA Error due to invalid Regex |
+| 78 | 445 | 1093 | Queue Message Expired | System Error : Queue Message Expired due to prolong gateway outage. |
+| 79 | 446 | 1094 | Invalid HTTP gateway config | System Error : Invalid HTTP gateway config or response code |
+| 80 | 417 | 1047 | User account inactive |  |
+| 81 | 0x418 (new) | 1048 (new) | Recipient opted out |  |
+| 82 | 0x419 (new) | 1049 (new) | Opt-out footer missing in body |  |
+| 83 | 0x400 | 1024 | User Account Locked |  |
+| 84 | 0x401 | 1025 | insufficient balance |  |
+| 85 | 0x402 | 1026 | Template Missmatch |  |
+| 86 | 0x405 | 1029 | invalid sender id |  |
+| 87 |  | 1031 | Global Blacklisted on Application level |  |
+| 88 | 0x40B | 1035 | No active connection |  |
+| 89 | 0x40C | 1036 | Queue server error | System Error : Message Queue internal server error |
+| 90 | 0x40D | 1037 | Cache server error | System Error : Cache DB error |
+| 91 | 0x40E | 1038 | Invalid connection state | Network Error : gateway not reachable |
+| 92 | 0x40F | 1039 | Smpp timeout | Network Error : gateway timeout |
+| 93 | 0x410 | 1040 | Unknown SMPP error |  |
+| 94 | 0x411 | 1041 | Final disconnection |  |
+| 95 | 0x412 | 1042 | final timeout |  |
+| 96 | 0x413 | 1043 | no gateway found |  |
+| 97 | 0x404 | 1028 | Invalid IP |  |
+| 98 | 0x414 | 1044 | Spam detected | Message failed due to spam word detected. |
+
+## Switch HTTP GW Error Codes
+
+| Sr No | Error Code (Hex) | Error Code (Decimal) | Error Name | Error Description |
+| --- | --- | --- | --- | --- |
+| 99 |  | 110 | Error while getting text response |  |
+| 100 |  | 111 | Error while getting JSON/XML response |  |
+| 101 |  | 112 | Error while reading response |  |
+| 102 |  | 113 | Error while reading response from result |  |
+| 103 |  | 114 | Error while requesting rest/json api |  |
+| 104 |  | 115 | Error while requesting simple http api |  |
+| 105 |  | 116 | Error while requesting SOAP api |  |
+| 106 |  | 1095 | Error while requesting SOAP/Simple/RestJson api | This is combine err code 114,115,116 in latest ver. |
+
+## MO Error Codes
+
+Mobile-Originated (MO) delivery outcome codes as reported on the inbox / DLR path.
+
+| Code | Constant | Inbox Label | Meaning | Delivered? |
+| --- | --- | --- | --- | --- |
+| 0 | Success | Success | Routed, billed, delivered | Yes |
+| 2002 | BillingDisabled | Billing Disabled | Delivered without charge — user is a reseller's child, or IsMoBillable = false | Yes |
+| 9 | UserLocked | Rejected — Locked User | Target user account is locked | No |
+| 1025 | InsufficientCredits | Insufficient Credits | Credit deduction failed (DeductForMoAsync returned false) | No |
+| 1047 | UserInactive | Rejected — Inactive User | Target user account inactive | No |
+| 1083 | Price\_Undef | Rate Plan Undefined | No MO rate for (user, channel, country/MCC/MNC) | No |
+| 1084 | LossProtection | Loss Protection | — see note below | No |
+| 1085 | Route\_Undef | Route Undefined | No MO routing rule matched | No |
+| 1090 | UserValidityExpired | Rejected — Validity Expired | Account validity period has passed | No |
+| 2004 | ConnectorCost\_Undef | Connector Cost Undefined | Billable user but no mo\_connectorcost row (cost ≤ 0) | No |
+| 2008 | MoPluginInactive | Rejected — MO Plugin Inactive | Routed user's SMS MO module is unassigned/inactive | No |
+
+Anything not in this list renders as literal "Code \<N\>" — the default branch of DescribeErrorCode.

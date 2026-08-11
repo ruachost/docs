@@ -5,18 +5,22 @@ description: "Complete list of API error codes and their meanings"
 
 ## Error Codes Reference
 
+<Info>
+  Looking for SMPP protocol-level and MO (Mobile-Originated) delivery error codes instead? See the [Standard SMPP Error Code List](/standard-smpp-error-code-list).
+</Info>
+
 The Ruach SMS API returns standardized error codes to help you understand and handle different response scenarios.
 
 ## Success Codes
 
 | Code | Description |
-|------|-------------|
+| --- | --- |
 | **0** | Success - Message successfully submitted |
 
 ## Authentication & Account Errors
 
 | Code | Description |
-|------|-------------|
+| --- | --- |
 | **001** | Account details cannot be blank |
 | **002** | Username or password cannot be blank |
 | **007** | Invalid API credentials (ApiKey or ClientId) |
@@ -30,7 +34,7 @@ The Ruach SMS API returns standardized error codes to help you understand and ha
 ## Message & Content Errors
 
 | Code | Description |
-|------|-------------|
+| --- | --- |
 | **003** | SenderId cannot be blank |
 | **004** | Message cannot be blank |
 | **005** | Message properties cannot be blank |
@@ -46,7 +50,7 @@ The Ruach SMS API returns standardized error codes to help you understand and ha
 ## Group & Template Errors
 
 | Code | Description |
-|------|-------------|
+| --- | --- |
 | **017** | Invalid groupid |
 | **018** | Cannot send multi message to group |
 | **032** | Parent group doesn't exist |
@@ -54,7 +58,7 @@ The Ruach SMS API returns standardized error codes to help you understand and ha
 ## System & Processing Errors
 
 | Code | Description |
-|------|-------------|
+| --- | --- |
 | **006** | ServerError#Error message |
 | **019** | Invalid schedule date |
 | **021** | Insufficient credits |
@@ -69,7 +73,7 @@ The Ruach SMS API returns standardized error codes to help you understand and ha
 ## Data & Validation Errors
 
 | Code | Description |
-|------|-------------|
+| --- | --- |
 | **027** | Already exist |
 | **028** | Can not be found |
 | **029** | Duplicate |
@@ -77,7 +81,7 @@ The Ruach SMS API returns standardized error codes to help you understand and ha
 ## Gateway & Routing Errors
 
 | Code | Description |
-|------|-------------|
+| --- | --- |
 | **031** | No gateway is assigned |
 | **101** | Message failed due to loss protection |
 | **801** | Country Undefined |
