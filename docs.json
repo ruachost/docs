@@ -8,6 +8,20 @@
     "dark": "#0269ff"
   },
   "favicon": "/favicon.ico",
+    "redirects": [
+          {
+                  "source": "/dashboard-walkthroug",
+                  "destination": "/dashboard-walkthrough"
+          },
+          {
+                  "source": "/api/v2/SenderId",
+                  "destination": "/api-reference/sender-ids/get-sender-ids"
+          },
+          {
+                  "source": "/api/v2/Balance",
+                  "destination": "/api-reference/credit-balance"
+          }
+    ],
   "navigation": {
     "tabs": [
       {
