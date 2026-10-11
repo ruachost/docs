@@ -1,0 +1,177 @@
+---
+title: "Ruach SMS for WHMCS"
+sidebarTitle: "WHMCS SMS Module"
+description: "Install, configure and run SMS notifications for WHMCS."
+---
+
+Ruach SMS for WHMCS is a free WHMCS addon module. It sends SMS to your clients for billing and service events through your Ruach SMS account.
+
+**Current version:** 1.2.0 · [Download](https://github.com/ruachost/ruach-sms-whmcs/releases/download/v1.2.0/ruach_sms_whmcs_v1.2.0.zip) · [GitHub](https://github.com/ruachost/ruach-sms-whmcs) · [WHMCS Marketplace](https://marketplace.whmcs.com/product/9157-ruach-sms-for-whmcs)
+
+## Requirements
+
+| Requirement | Detail |
+| --- | --- |
+| WHMCS | 8.0 or later |
+| PHP | 7.4 or later, with the cURL extension |
+| Cron | The WHMCS cron must run every 5–15 minutes |
+| Ruach SMS account | API key, Client ID and an approved Sender ID, from your dashboard at app.notify.ng |
+
+## Installation
+
+1. [Download the module zip](https://github.com/ruachost/ruach-sms-whmcs/releases/download/v1.2.0/ruach_sms_whmcs_v1.2.0.zip) and extract it.
+2. Upload the `modules/addons/ruach_sms` folder to `<your WHMCS>/modules/addons/`.
+3. In WHMCS admin, go to **System Settings → Addon Modules**.
+4. Find **Ruach SMS for WHMCS** and click **Activate**. This creates the module's database tables and default templates.
+5. Click **Configure**, fill in the settings below, and under **Access Control** tick the admin roles that may open the module.
+6. Save. The module is now under **Addons → Ruach SMS for WHMCS**.
+
+<Note>
+  The module starts in **dry-run mode**. It logs every message it would send but sends nothing until you turn dry run off.
+</Note>
+
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **API Key** | Your Ruach SMS API key. |
+| **Client ID** | Your Ruach SMS Client ID. |
+| **Sender ID** | The name messages come from (up to 11 characters). It must be approved on your account. |
+| **Brand name** | Replaces `{brand}` in messages. Leave blank to use your WHMCS company name. |
+| **Countries** | Comma-separated ISO country codes of clients to text, e.g. `NG,GH`. Leave blank to text all countries. Default: `NG`. |
+| **Expiry reminder days** | Days before a due date to send expiry reminders. Default: `7,3,1`. |
+| **Send from / Send until (hour)** | Sending hours in server time for non-urgent messages. Set both to the same hour to send at any time. Default: 9 to 18. |
+| **Low credit alert** | Emails your admins, at most once a day, when your credit balance drops below this amount. Leave blank to turn it off. |
+| **Delete data on deactivate** | Deletes templates, the message log and opt-outs when the module is deactivated. Off by default. |
+| **Dry run** | Logs messages without sending them. On by default. |
+
+## Events
+
+| Event | Trigger | Timing |
+| --- | --- | --- |
+| Invoice created | A new unpaid invoice is published, including renewal invoices created by the cron | Sending hours |
+| Payment received | An invoice is marked paid | Immediate |
+| Invoice overdue | WHMCS sends its 1st, 2nd or 3rd overdue notice | Sending hours |
+| Service expiry reminder | A product/service is due in one of your reminder days **and** its renewal invoice is unpaid | Sending hours |
+| Domain expiry reminder | A domain is due in one of your reminder days **and** its renewal invoice is unpaid (domains set to "do not renew" are skipped) | Sending hours |
+| Service suspended | A product/service is suspended | Sending hours |
+| Service reactivated | A product/service is unsuspended | Immediate |
+
+Messages outside sending hours are queued and sent when the hours open. Queued messages older than 2 days expire instead of being sent late.
+
+## Templates
+
+Edit messages under **Addons → Ruach SMS for WHMCS → Templates**. Each event can be switched on or off. Clear a template and save it to restore the default.
+
+### Placeholders
+
+Available in every template:
+
+| Placeholder | Value |
+| --- | --- |
+| `{brand}` | Brand name setting, or your company name |
+| `{firstname}` `{lastname}` `{company}` | Client details |
+| `{clientarea_url}` | Link to your client area |
+
+Event-specific:
+
+| Placeholder | Events | Value |
+| --- | --- | --- |
+| `{invoice_id}` | Invoice and reminder events | Invoice number |
+| `{amount}` | Invoice and reminder events | Total with currency code, e.g. `NGN 26,820.16` |
+| `{due_date}` | Invoice and reminder events | e.g. `18 Oct 2026` |
+| `{invoice_url}` | Invoice and reminder events | Link to view and pay the invoice |
+| `{service}` | Service events | The service's domain, or the product name if it has none |
+| `{product}` | Service events | Product name |
+| `{domain}` | Service and domain events | Domain name |
+| `{when}` | Expiry reminders | `tomorrow` or `on 18 Oct` |
+| `{days}` | Expiry reminders | Number of days left |
+
+### Message length
+
+One SMS holds 160 standard characters, and longer messages are split into 153-character parts. Any character outside the GSM alphabet, such as `₦` or an emoji, switches the whole message to Unicode, which holds only 70 characters per part. Use currency codes (`NGN`) rather than symbols. The editor shows the character and part count as you type. Placeholders are filled in when the message is sent, so the final length varies.
+
+## Message log
+
+**Addons → Ruach SMS for WHMCS → Message log** lists every message, newest first, with the client, phone number, text and the gateway response. The tiles at the top count the last 30 days. Click a tile to filter the log.
+
+| Status | Meaning |
+| --- | --- |
+| **Delivered** | The network confirmed delivery |
+| **Undelivered** | The network reported failure: `UNDELIV`, `EXPIRED`, `REJECTD`, `BLACKLIST` or `DELETED` |
+| **Awaiting report** | Accepted for sending, no final delivery report yet |
+| **Failed** | Not accepted by the gateway. It is retried up to 3 times within 2 days. Use **Retry** to send it now |
+| **Queued** | Waiting for sending hours |
+| **Skipped** | Not sent because the client has no valid mobile number |
+| **Dry run** | Logged while dry run was on |
+| **Expired** | Queued for more than 2 days and not sent |
+
+Every successful send, and every message reported as undelivered, is also written to the WHMCS Activity Log and the client's log.
+
+## Delivery reports
+
+The cron checks the delivery status of each sent message every 10 minutes for up to 3 days. Click **Check** on a message to look it up straight away.
+
+## Credit balance
+
+Your credit balance appears on the Message log page. It is refreshed every 10 minutes, or straight away when you click **Refresh**. When you set a **Low credit alert**, a red banner appears below that level and your admins get an email at most once a day.
+
+## Opt-outs
+
+Add a client ID under **Opt-outs** to stop all SMS to that client. Remove it to resume. Clients with the status Closed are never texted.
+
+## Phone numbers
+
+The module converts numbers to international format using the client's country:
+
+| Stored as | Sent to |
+| --- | --- |
+| `+234.8031234567` | `2348031234567` |
+| `08031234567` (country NG) | `2348031234567` |
+| `8031234567` (country NG) | `2348031234567` |
+| `+234 0803 123 4567` | `2348031234567` |
+| `002348031234567` | `2348031234567` |
+
+Numbers that can't be resolved are logged as **Skipped**. To make numbers consistent, turn on WHMCS's international phone number formatting under **System Settings → General Settings → Other**.
+
+## Testing before you go live
+
+1. Under **Send test**, send an SMS to your own number. This works in dry-run mode.
+2. Create a test client with your mobile number and country.
+3. With dry run on, trigger events and check that a **Dry run** row appears in the Message log for each:
+   - **Invoice created:** create an invoice and publish it.
+   - **Payment received:** use **Add Payment** on that invoice.
+   - **Expiry reminders:** set a service's next due date 7 days ahead, then click **Generate Due Invoices**. The reminder appears at the next cron run within sending hours.
+4. When the log looks right, turn **Dry run** off.
+
+## Troubleshooting
+
+| Problem | What to check |
+| --- | --- |
+| "Not configured" banner | API Key, Client ID and Sender ID are all set in the module configuration. |
+| Nothing appears in the log | The cron is running. The event's template is enabled. The client's country is in **Countries**. The client is not opted out. |
+| Rows stay **Queued** | It is outside your sending hours, which use server time. Check the server's timezone. |
+| **Failed** with an HTTP error | Read the gateway response in the log. Common causes are a wrong API key, an unapproved Sender ID or no credit. |
+| **Skipped** | The client's phone number is missing or can't be resolved for their country. |
+| Balance shows "unavailable" | The API Key and Client ID are wrong, or the server cannot reach app.notify.ng over HTTPS. |
+
+## Deactivating and uninstalling
+
+Deactivating stops all messages. Your data is kept unless **Delete data on deactivate** is on. To uninstall completely, turn that option on, deactivate the module, then delete the `modules/addons/ruach_sms` folder.
+
+## Data protection
+
+To deliver messages, the module sends Ruach your clients' names, mobile numbers and the billing details in your templates. You are the data controller and must have a lawful basis to send these messages. Ruach processes the data as your processor under its [Data Processing Agreement](https://ruachnet.com/dpa).
+
+## Changelog
+
+| Version | Changes |
+| --- | --- |
+| 1.2.0 | First public release. Adds the "Delete data on deactivate" option. |
+| 1.1.1 | Invoice SMS also sent for invoices published without the email; credit balance to 2 decimal places. |
+| 1.1.0 | Delivery reports; Activity Log entries; Delivered/Undelivered filters. |
+| 1.0.0 | Initial release. |
+
+## Support
+
+Email [**support@ruachnet.com**](mailto:support@ruachnet.com), or open an issue on [GitHub](https://github.com/ruachost/ruach-sms-whmcs/issues), with your WHMCS version, the module version, and the Message log entry for the affected message.

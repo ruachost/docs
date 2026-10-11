@@ -108,6 +108,12 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Integrations",
+        "pages": [
+          "whmcs-sms"
+        ]
       }
     ],
     "global": {
