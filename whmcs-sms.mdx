@@ -6,7 +6,7 @@ description: "Install, configure and run SMS notifications for WHMCS."
 
 Ruach SMS for WHMCS is a free WHMCS addon module. It sends SMS to your clients for billing and service events through your Ruach SMS account.
 
-**Current version:** 1.2.0 · [Download](https://github.com/ruachost/ruach-sms-whmcs/releases/download/v1.2.0/ruach_sms_whmcs_v1.2.0.zip) · [GitHub](https://github.com/ruachost/ruach-sms-whmcs) · [WHMCS Marketplace](https://marketplace.whmcs.com/product/9157-ruach-sms-for-whmcs)
+**Current version:** 1.3.0 · [Download](https://github.com/ruachost/ruach-sms-whmcs/releases/download/v1.3.0/ruach_sms_whmcs_v1.3.0.zip) · [GitHub](https://github.com/ruachost/ruach-sms-whmcs) · [WHMCS Marketplace](https://marketplace.whmcs.com/product/9157-ruach-sms-for-whmcs)
 
 ## Requirements
 
@@ -19,7 +19,7 @@ Ruach SMS for WHMCS is a free WHMCS addon module. It sends SMS to your clients f
 
 ## Installation
 
-1. [Download the module zip](https://github.com/ruachost/ruach-sms-whmcs/releases/download/v1.2.0/ruach_sms_whmcs_v1.2.0.zip) and extract it.
+1. [Download the module zip](https://github.com/ruachost/ruach-sms-whmcs/releases/download/v1.3.0/ruach_sms_whmcs_v1.3.0.zip) and extract it.
 2. Upload the `modules/addons/ruach_sms` folder to `<your WHMCS>/modules/addons/`.
 3. In WHMCS admin, go to **System Settings → Addon Modules**.
 4. Find **Ruach SMS for WHMCS** and click **Activate**. This creates the module's database tables and default templates.
@@ -30,34 +30,56 @@ Ruach SMS for WHMCS is a free WHMCS addon module. It sends SMS to your clients f
   The module starts in **dry-run mode**. It logs every message it would send but sends nothing until you turn dry run off.
 </Note>
 
+## Upgrading
+
+Upload the new `modules/addons/ruach_sms` folder over your existing one, then open **System Settings → Addon Modules**. WHMCS runs the upgrade automatically and keeps your settings, templates and log.
+
 ## Settings
 
 | Setting | What it does |
 | --- | --- |
 | **API Key** | Your Ruach SMS API key. |
 | **Client ID** | Your Ruach SMS Client ID. |
-| **Sender ID** | The name messages come from (up to 11 characters). It must be approved on your account. |
+| **Sender ID (transactional)** | The name messages come from (up to 11 characters). It must be approved on your account. Used for transactional messages, and for every message when no promotional Sender ID is set. |
+| **Sender ID (promotional)** | Optional. Used for templates in the Promotional category. Leave blank to use one Sender ID for everything. |
 | **Brand name** | Replaces `{brand}` in messages. Leave blank to use your WHMCS company name. |
 | **Countries** | Comma-separated ISO country codes of clients to text, e.g. `NG,GH`. Leave blank to text all countries. Default: `NG`. |
 | **Expiry reminder days** | Days before a due date to send expiry reminders. Default: `7,3,1`. |
 | **Send from / Send until (hour)** | Sending hours in server time for non-urgent messages. Set both to the same hour to send at any time. Default: 9 to 18. |
+| **Promotional from / until (hour)** | Optional sending hours for promotional messages. Leave both on `same` to use the main sending hours. |
+| **Promotional: opted-in clients only** | Sends promotional messages only to clients who have opted in to marketing in WHMCS. Off by default. |
 | **Low credit alert** | Emails your admins, at most once a day, when your credit balance drops below this amount. Leave blank to turn it off. |
 | **Delete data on deactivate** | Deletes templates, the message log and opt-outs when the module is deactivated. Off by default. |
 | **Dry run** | Logs messages without sending them. On by default. |
 
 ## Events
 
-| Event | Trigger | Timing |
-| --- | --- | --- |
-| Invoice created | A new unpaid invoice is published, including renewal invoices created by the cron | Sending hours |
-| Payment received | An invoice is marked paid | Immediate |
-| Invoice overdue | WHMCS sends its 1st, 2nd or 3rd overdue notice | Sending hours |
-| Service expiry reminder | A product/service is due in one of your reminder days **and** its renewal invoice is unpaid | Sending hours |
-| Domain expiry reminder | A domain is due in one of your reminder days **and** its renewal invoice is unpaid (domains set to "do not renew" are skipped) | Sending hours |
-| Service suspended | A product/service is suspended | Sending hours |
-| Service reactivated | A product/service is unsuspended | Immediate |
+| Event | Trigger | Timing | Default category |
+| --- | --- | --- | --- |
+| Invoice created | A new unpaid invoice is published, including renewal invoices created by the cron | Sending hours | Promotional |
+| Payment received | An invoice is marked paid | Immediate | Transactional |
+| Invoice overdue | WHMCS sends its 1st, 2nd or 3rd overdue notice | Sending hours | Promotional |
+| Service expiry reminder | A product/service is due in one of your reminder days **and** its renewal invoice is unpaid | Sending hours | Promotional |
+| Domain expiry reminder | A domain is due in one of your reminder days **and** its renewal invoice is unpaid (domains set to "do not renew" are skipped) | Sending hours | Promotional |
+| Service suspended | A product/service is suspended | Sending hours | Transactional |
+| Service reactivated | A product/service is unsuspended | Immediate | Transactional |
 
 Messages outside sending hours are queued and sent when the hours open. Queued messages older than 2 days expire instead of being sent late.
+
+## Transactional and promotional messages
+
+In some countries, networks and regulators treat messages differently depending on their purpose. A payment confirmation is often _transactional_, while an invoice or renewal reminder counts as _promotional_. The two types usually have to go out on different Sender IDs, and promotional messages may only be allowed during certain hours or to customers who have agreed to receive them.
+
+Every template has a **Category**, Transactional or Promotional, which you can change on the **Templates** page. The defaults are shown in the Events table above.
+
+| Setup | What happens |
+| --- | --- |
+| Only **Sender ID (transactional)** set | Every message goes out on that Sender ID. Categories only affect the promotional sending hours and opt-in setting, if you use them. |
+| Both Sender IDs set | Transactional templates use the transactional Sender ID; promotional templates use the promotional one. |
+
+The Message log shows the category and the Sender ID each message was sent from. If a message fails because a Sender ID was wrong, fix it in the configuration and click **Retry**: the message is resent using the current Sender ID.
+
+If you turn on **Promotional: opted-in clients only**, promotional messages to clients who haven't opted in to marketing are logged as **Skipped**.
 
 ## Templates
 
@@ -102,7 +124,7 @@ One SMS holds 160 standard characters, and longer messages are split into 153-ch
 | **Awaiting report** | Accepted for sending, no final delivery report yet |
 | **Failed** | Not accepted by the gateway. It is retried up to 3 times within 2 days. Use **Retry** to send it now |
 | **Queued** | Waiting for sending hours |
-| **Skipped** | Not sent because the client has no valid mobile number |
+| **Skipped** | Not sent because the client has no valid mobile number, or a promotional message to a client who hasn't opted in |
 | **Dry run** | Logged while dry run was on |
 | **Expired** | Queued for more than 2 days and not sent |
 
@@ -148,11 +170,11 @@ Numbers that can't be resolved are logged as **Skipped**. To make numbers consis
 
 | Problem | What to check |
 | --- | --- |
-| "Not configured" banner | API Key, Client ID and Sender ID are all set in the module configuration. |
+| "Not configured" banner | API Key, Client ID and Sender ID (transactional) are all set in the module configuration. |
 | Nothing appears in the log | The cron is running. The event's template is enabled. The client's country is in **Countries**. The client is not opted out. |
 | Rows stay **Queued** | It is outside your sending hours, which use server time. Check the server's timezone. |
-| **Failed** with an HTTP error | Read the gateway response in the log. Common causes are a wrong API key, an unapproved Sender ID or no credit. |
-| **Skipped** | The client's phone number is missing or can't be resolved for their country. |
+| **Failed** with an HTTP error | Read the gateway response in the log. Common causes are a wrong API key, an unapproved Sender ID or no credit. The log shows which Sender ID was used. |
+| **Skipped** | The client's phone number is missing or can't be resolved for their country, or the client hasn't opted in to promotional messages. |
 | Balance shows "unavailable" | The API Key and Client ID are wrong, or the server cannot reach app.notify.ng over HTTPS. |
 
 ## Deactivating and uninstalling
@@ -167,6 +189,7 @@ To deliver messages, the module sends Ruach your clients' names, mobile numbers 
 
 | Version | Changes |
 | --- | --- |
+| 1.3.0 | Transactional and promotional Sender IDs, per-template category, promotional sending hours and marketing opt-in. Delivery times now shown in server time. The Message log filter stays applied after Check, Retry and Refresh. |
 | 1.2.0 | First public release. Adds the "Delete data on deactivate" option. |
 | 1.1.1 | Invoice SMS also sent for invoices published without the email; credit balance to 2 decimal places. |
 | 1.1.0 | Delivery reports; Activity Log entries; Delivered/Undelivered filters. |
