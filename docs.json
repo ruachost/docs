@@ -20,6 +20,13 @@
             ]
           },
           {
+            "group": "WhatsApp API",
+            "pages": [
+              "whatsapp/index",
+              "whatsapp/authentication"
+            ]
+          },
+          {
             "group": "SMTP Email",
             "pages": [
               "smtp/index",
