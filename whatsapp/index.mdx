@@ -1,0 +1,62 @@
+---
+title: "WhatsApp API"
+description: "Send approved WhatsApp templates at scale with personalized text, media, locations, and carousel cards"
+---
+
+The Pro Plus WhatsApp API lets you discover active connectors, inspect approved Meta templates, and send template messages to one or many recipients.
+
+## Base URL
+
+The WhatsApp API uses the same base URL as the SMS API:
+
+```bash
+export WHATSAPP_BASE_URL="https://app.notify.ng"
+```
+
+All WhatsApp endpoints use the following route prefix:
+
+```text
+/api/whatsapp/v1
+```
+
+## Quick start
+
+<Steps>
+  <Step title="Set up authentication">
+    Use your client ID as the HTTP Basic username and your API key as the password.
+  </Step>
+  <Step title="Choose an active connector">
+    [List your active connectors](/whatsapp/connectors/get-connectors) and copy the connector's `phoneNumber` and `whatsappBusinessAccountId`.
+  </Step>
+  <Step title="Find an approved template">
+    [List templates](/whatsapp/templates/list-templates) for the WhatsApp Business Account and copy the template's `metaTemplateId`.
+  </Step>
+  <Step title="Send a message">
+    Use a [bulk payload](/whatsapp/messages/send-bulk) when all recipients receive the same values, or a [custom payload](/whatsapp/messages/send-custom) for per-recipient personalization.
+  </Step>
+</Steps>
+
+## Message capabilities
+
+<Columns cols={2}>
+  <Card title="Bulk payloads" icon="users" href="/whatsapp/messages/send-bulk">
+    Send one set of template variables to a comma-separated recipient list.
+  </Card>
+  <Card title="Custom payloads" icon="message" href="/whatsapp/messages/send-custom">
+    Supply different header and body values for each recipient.
+  </Card>
+  <Card title="Media and locations" icon="file-text" href="/whatsapp/messages/media-and-location">
+    Send approved templates with image, video, PDF, or location headers.
+  </Card>
+  <Card title="Carousel cards" icon="chart-bar" href="/whatsapp/messages/carousel">
+    Populate media, body variables, and dynamic URL values for each template card.
+  </Card>
+</Columns>
+
+<Warning>
+Messages must use a template already associated with the authenticated WhatsApp Business Account. A template that is pending or rejected cannot be sent.
+</Warning>
+
+## Naming conventions
+
+Request field names are case-sensitive. In particular, the API contract spells the recipient field `RecieverNumber`. Use that spelling exactly, even though `ReceiverNumber` is the conventional English spelling.

@@ -1,0 +1,128 @@
+---
+title: "Send Carousel Messages"
+description: "Send WhatsApp template carousels with media cards and dynamic values"
+api: "POST /api/whatsapp/v1/Send"
+---
+
+Carousel templates contain ordered cards. Each request must include one `CarouselCards` entry for every card in the approved template, in the same order.
+
+## Card fields
+
+<ParamField body="CarouselCards" type="object[]" required>
+  Ordered card values. The number of entries must match the approved template.
+</ParamField>
+
+<ParamField body="CarouselCards[].MediaFilePath" type="string" required>
+  Public image or video URL. Its media type must match the corresponding template card.
+</ParamField>
+
+<ParamField body="CarouselCards[].BodyVariables" type="string[]">
+  Values for placeholders in the card body, in template order.
+</ParamField>
+
+<ParamField body="CarouselCards[].UrlButtonVariables" type="string[]">
+  Dynamic URL-button suffix values used by the card, in template order.
+</ParamField>
+
+## Same carousel for multiple recipients
+
+Place `CarouselCards` inside `BulkPayload` to send the same card content to every recipient.
+
+```json
+{
+  "SenderNumber": "15551234567",
+  "MetaTemplateId": "19999001",
+  "BulkPayload": {
+    "RecieverNumber": "15559876543,15557654321",
+    "BodyVariables": ["Summer Collection"],
+    "CarouselCards": [
+      {
+        "MediaFilePath": "https://cdn.example.com/summer-1.jpg",
+        "BodyVariables": ["20% off"],
+        "UrlButtonVariables": ["summer-deal-1"]
+      },
+      {
+        "MediaFilePath": "https://cdn.example.com/summer-2.jpg",
+        "BodyVariables": ["30% off"],
+        "UrlButtonVariables": ["summer-deal-2"]
+      }
+    ]
+  }
+}
+```
+
+## Per-recipient carousels
+
+Place `CarouselCards` inside each `CustomPayload` entry to send different cards or values to each recipient.
+
+```bash
+curl --request POST \
+  --url "https://app.notify.ng/api/whatsapp/v1/Send" \
+  --user "$CLIENT_ID:$API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "SenderNumber": "15551234567",
+    "MetaTemplateId": "19999001",
+    "CustomPayload": [
+      {
+        "RecieverNumber": "15559876543",
+        "BodyVariables": ["Summer Collection"],
+        "CarouselCards": [
+          {
+            "MediaFilePath": "https://cdn.example.com/summer-1.jpg",
+            "BodyVariables": ["20% off"]
+          },
+          {
+            "MediaFilePath": "https://cdn.example.com/summer-2.jpg",
+            "BodyVariables": ["30% off"]
+          }
+        ]
+      },
+      {
+        "RecieverNumber": "15557654321",
+        "BodyVariables": ["Winter Collection"],
+        "CarouselCards": [
+          {
+            "MediaFilePath": "https://cdn.example.com/winter-1.jpg",
+            "BodyVariables": ["10% off"]
+          },
+          {
+            "MediaFilePath": "https://cdn.example.com/winter-2.jpg",
+            "BodyVariables": ["15% off"]
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+## Success response
+
+```json
+{
+  "statusCode": 0,
+  "status": "Success",
+  "messages": [
+    {
+      "messageId": "11111111-2222-4333-8444-555566667777",
+      "receiverNumber": "15559876543"
+    },
+    {
+      "messageId": "88888888-9999-4aaa-8bbb-ccccddddeeee",
+      "receiverNumber": "15557654321"
+    }
+  ]
+}
+```
+
+## Parameter mismatch
+
+When the number of cards or card values does not match the template, the API returns HTTP `400`:
+
+```json
+{
+  "statusCode": 1035,
+  "status": "Carousel card parameters are missing or do not match the template. Provide one 'CarouselCards' entry per template card, each supplying the card's media and any body/URL variables.",
+  "messages": null
+}
+```

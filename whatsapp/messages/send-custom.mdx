@@ -1,0 +1,102 @@
+---
+title: "Send Personalized Messages"
+description: "Send different template variable values to each WhatsApp recipient"
+api: "POST /api/whatsapp/v1/Send"
+---
+
+Use `CustomPayload` when recipients need different header or body values. Each array item represents one recipient.
+
+## Request fields
+
+<ParamField body="SenderNumber" type="string" required>
+  Active WhatsApp sender number returned by the connectors endpoint.
+</ParamField>
+
+<ParamField body="MetaTemplateId" type="string" required>
+  Identifier of the approved Meta template to send.
+</ParamField>
+
+<ParamField body="CustomPayload" type="object[]" required>
+  Recipient-specific payloads.
+</ParamField>
+
+<ParamField body="CustomPayload[].RecieverNumber" type="string" required>
+  Recipient number in international format.
+</ParamField>
+
+<ParamField body="CustomPayload[].HeaderVariable" type="string">
+  Recipient-specific value for a dynamic text header.
+</ParamField>
+
+<ParamField body="CustomPayload[].BodyVariables" type="string[]">
+  Recipient-specific values for body placeholders, in template order.
+</ParamField>
+
+## Header and body variables
+
+```bash
+curl --request POST \
+  --url "https://app.notify.ng/api/whatsapp/v1/Send" \
+  --user "$CLIENT_ID:$API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "SenderNumber": "15551234567",
+    "MetaTemplateId": "12121212212",
+    "CustomPayload": [
+      {
+        "RecieverNumber": "15559876543",
+        "HeaderVariable": "Order update",
+        "BodyVariables": ["Amina", "ORD-1042"]
+      },
+      {
+        "RecieverNumber": "15557654321",
+        "HeaderVariable": "Delivery update",
+        "BodyVariables": ["David", "ORD-1043"]
+      }
+    ]
+  }'
+```
+
+## Authentication template (OTP)
+
+For an authentication template, put each recipient's OTP in `BodyVariables`:
+
+```json
+{
+  "SenderNumber": "15551234567",
+  "MetaTemplateId": "458911",
+  "CustomPayload": [
+    {
+      "RecieverNumber": "15559876543",
+      "BodyVariables": ["384921"]
+    },
+    {
+      "RecieverNumber": "15557654321",
+      "BodyVariables": ["927145"]
+    }
+  ]
+}
+```
+
+<Note>
+The template determines whether a header variable, body variables, or both are required. Omit fields that the template does not define.
+</Note>
+
+## Success response
+
+```json
+{
+  "statusCode": 0,
+  "status": "Success",
+  "messages": [
+    {
+      "messageId": "11111111-2222-4333-8444-555566667777",
+      "receiverNumber": "15559876543"
+    },
+    {
+      "messageId": "88888888-9999-4aaa-8bbb-ccccddddeeee",
+      "receiverNumber": "15557654321"
+    }
+  ]
+}
+```

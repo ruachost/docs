@@ -1,0 +1,51 @@
+---
+title: "Get Template Details"
+description: "Retrieve a WhatsApp template by its Meta template ID"
+api: "GET /api/whatsapp/v1/Template/Get"
+---
+
+Returns the structure, language, category, components, and example placeholder values for one template.
+
+## Request
+
+<ParamField query="MetaTemplateId" type="string" required>
+  Meta's unique identifier for the template. The template must belong to a WABA available to the authenticated user.
+</ParamField>
+
+```bash
+curl --request GET \
+  --url "https://app.notify.ng/api/whatsapp/v1/Template/Get?MetaTemplateId=12121212212" \
+  --user "$CLIENT_ID:$API_KEY" \
+  --header "Accept: application/json"
+```
+
+## Response
+
+<ResponseField name="errorCode" type="number">
+  `0` when the request succeeds; otherwise, an API error code.
+</ResponseField>
+
+<ResponseField name="errorDescription" type="string">
+  Human-readable result description.
+</ResponseField>
+
+<ResponseField name="data" type="string">
+  A JSON-encoded string containing the template definition.
+</ResponseField>
+
+```json
+{
+  "errorCode": 0,
+  "errorDescription": "Template details fetched successfully",
+  "data": "{\"name\":\"order_update\",\"language\":\"en\",\"category\":\"UTILITY\",\"components\":[{\"type\":\"BODY\",\"text\":\"Hello {{1}}, your order {{2}} is ready.\"}]}"
+}
+```
+
+<Note>
+`data` is JSON encoded inside a string. Parse the outer response first, then parse `data` to work with the template object.
+</Note>
+
+```javascript
+const result = await response.json();
+const template = JSON.parse(result.data);
+```

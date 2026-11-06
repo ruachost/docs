@@ -1,0 +1,65 @@
+---
+title: "Error Codes"
+description: "WhatsApp API status codes, meanings, and corresponding HTTP responses"
+---
+
+An unsuccessful request returns a non-zero API status code and an HTTP status that indicates the error category.
+
+```json
+{
+  "statusCode": 1025,
+  "status": "Body parameters are missing in the request or the count of provided parameters does not match the expected count.",
+  "messages": null
+}
+```
+
+| Status code | Description | HTTP status |
+| ---: | --- | --- |
+| `0` | Success | `200 OK` |
+| `401` | Invalid API credentials. | `401 Unauthorized` |
+| `1000` | Unknown error. Try again later or contact support. | `500 Internal Server Error` |
+| `1001` | Template name must be lowercase and cannot contain spaces or special characters other than `_`. | `400 Bad Request` |
+| `1002` | Template name exceeds 512 characters. | `400 Bad Request` |
+| `1003` | Invalid template category. | `400 Bad Request` |
+| `1004` | Invalid language code. | `400 Bad Request` |
+| `1005` | Template has not been approved or was rejected by Meta. | `422 Unprocessable Entity` |
+| `1006` | Invalid file type. Allowed types: JPG, JPEG, PNG, MP4, and PDF. | `400 Bad Request` |
+| `1007` | Footer exceeds 60 characters. | `400 Bad Request` |
+| `1008` | Header text exceeds 60 characters. | `400 Bad Request` |
+| `1009` | Body text exceeds 1,024 characters. | `400 Bad Request` |
+| `1010` | Invalid connector name. | `400 Bad Request` |
+| `1011` | Campaign contains invalid mobile numbers. | `400 Bad Request` |
+| `1012` | No template exists for the specified `WABAID` or `MetaTemplateId`. | `404 Not Found` |
+| `1013` | Invalid campaign language code. | `400 Bad Request` |
+| `1014` | Insufficient campaign credits. | `422 Unprocessable Entity` |
+| `1015` | Connector is inactive. | `422 Unprocessable Entity` |
+| `1016` | No connector was found for the campaign. | `404 Not Found` |
+| `1017` | Campaign header text exceeds 60 characters. | `400 Bad Request` |
+| `1018` | Campaign body text exceeds 1,024 characters. | `400 Bad Request` |
+| `1019` | Required query parameters are missing or invalid. | `400 Bad Request` |
+| `1020` | Media URL was not supplied or no file was found at the URL. | `400 Bad Request` |
+| `1021` | Recipient opted out of promotional messages. | `422 Unprocessable Entity` |
+| `1022` | No selling price is configured for the recipient's country. | `422 Unprocessable Entity` |
+| `1023` | Required request fields or the required bulk/custom payload are missing. | `400 Bad Request` |
+| `1024` | Header variables are missing or exceed the maximum of one. | `400 Bad Request` |
+| `1025` | Body variables are missing or do not match the template's placeholder count. | `400 Bad Request` |
+| `1026` | Location details are missing or invalid. | `400 Bad Request` |
+| `1027` | Recipient limit exceeded. | `400 Bad Request` |
+| `1028` | Requested template offset exceeds the available results. | `404 Not Found` |
+| `1029` | No templates exist for the specified template status. | `404 Not Found` |
+| `1030` | User account is inactive or locked. | `422 Unprocessable Entity` |
+| `1031` | Required service or plugin is inactive or unavailable. | `422 Unprocessable Entity` |
+| `1032` | Sender number is invalid. | `400 Bad Request` |
+| `1033` | Payload type, structure, or data does not match the required schema. | `400 Bad Request` |
+| `1034` | Document filename exceeds 200 characters. | `400 Bad Request` |
+| `1035` | Carousel card values are missing or do not match the template. | `400 Bad Request` |
+
+## Troubleshooting checklist
+
+1. Confirm the client ID and API key are being sent with HTTP Basic authentication.
+2. Verify `SenderNumber` belongs to an active connector.
+3. Confirm the template is approved and belongs to the selected WABA.
+4. Match header, body, and carousel variables to the template exactly and in order.
+5. Ensure recipient numbers use international format and media URLs are publicly reachable.
+
+For unresolved `1000`, `1030`, or `1031` errors, contact [Ruach support](mailto:support@ruach.ng) with the status code and request time. Do not include your API key.

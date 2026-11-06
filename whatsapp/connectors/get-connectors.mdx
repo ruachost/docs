@@ -1,0 +1,47 @@
+---
+title: "List Active Connectors"
+description: "Retrieve the WhatsApp connectors linked to the authenticated user"
+api: "GET /api/whatsapp/v1/Connector/GetAll"
+---
+
+Returns all currently active connectors associated with the authenticated user. This endpoint is read-only and cannot be used to integrate a new connector.
+
+## Request
+
+```bash
+curl --request GET \
+  --url "https://app.notify.ng/api/whatsapp/v1/Connector/GetAll" \
+  --user "$CLIENT_ID:$API_KEY" \
+  --header "Accept: application/json"
+```
+
+## Response
+
+The response is an array of connector objects.
+
+<ResponseField name="connectorName" type="string">
+  Display name assigned to the connector.
+</ResponseField>
+
+<ResponseField name="phoneNumber" type="string">
+  WhatsApp sender number associated with the connector. Use this as `SenderNumber` when sending a message.
+</ResponseField>
+
+<ResponseField name="phoneNumberId" type="string">
+  Meta identifier for the sender phone number.
+</ResponseField>
+
+<ResponseField name="whatsappBusinessAccountId" type="string">
+  WhatsApp Business Account (WABA) identifier. Use this as `WABAID` when listing templates.
+</ResponseField>
+
+```json
+[
+  {
+    "connectorName": "Production Connector",
+    "phoneNumber": "15551234567",
+    "phoneNumberId": "105275990012345",
+    "whatsappBusinessAccountId": "10032002100120020"
+  }
+]
+```

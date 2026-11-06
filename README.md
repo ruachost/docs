@@ -1,15 +1,17 @@
-# Ruach SMS API Documentation
+# Ruach API Documentation
 
-This repository contains the complete documentation for the Ruach SMS API.
+This repository contains the documentation for Ruach messaging APIs, including SMS, WhatsApp, and SMTP email.
 
 ## Overview
 
-The Ruach SMS API provides a comprehensive solution for sending SMS messages, managing campaigns, and tracking delivery reports. This documentation covers all available endpoints, authentication methods, and integration examples.
+Ruach provides APIs for sending SMS and WhatsApp messages, managing messaging resources, and tracking delivery. This documentation covers the available endpoints, authentication methods, payloads, and integration examples.
 
 ## Features
 
 - **Complete API Reference**: All endpoints with examples in multiple languages
 - **Authentication Guide**: Step-by-step authentication setup
+- **WhatsApp Templates**: Connector discovery, template lookup, and bulk or personalized sends
+- **Rich WhatsApp Messages**: Media, location, OTP, and carousel payload examples
 - **Error Handling**: Comprehensive error codes and handling strategies
 - **Webhook Integration**: Real-time delivery report setup
 - **Code Examples**: Ready-to-use code samples in JavaScript, Python, PHP, and cURL
@@ -34,6 +36,8 @@ View your local preview at `http://localhost:3000`.
 
 ### Core Features
 - **SMS Sending**: Send individual and bulk SMS messages
+- **WhatsApp Messaging**: Send approved templates with shared or per-recipient variables
+- **Rich Media**: Add media, location, and carousel content to WhatsApp templates
 - **Campaign Management**: Create and track SMS campaigns
 - **Group Management**: Organize contacts into groups
 - **Template System**: Create reusable message templates

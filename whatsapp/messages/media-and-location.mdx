@@ -1,0 +1,109 @@
+---
+title: "Send Media and Location Headers"
+description: "Populate approved WhatsApp templates with media or location headers"
+api: "POST /api/whatsapp/v1/Send"
+---
+
+Templates with dynamic headers can receive an image, video, document, or location at send time. The header type must match the approved template.
+
+## Supported media
+
+| Media | File types | Content type |
+| --- | --- | --- |
+| Image | JPG, JPEG, PNG | `image/jpeg`, `image/png` |
+| Video | MP4 | `video/mp4` |
+| Document | PDF | `application/pdf` |
+
+The media URL must be publicly reachable by the WhatsApp service.
+
+## Media header
+
+<ParamField body="MediaFilePath" type="string" required>
+  Public URL of the image, video, or PDF that matches the template header type.
+</ParamField>
+
+<ParamField body="FileName" type="string">
+  Display name for a PDF document. The value must contain 1–200 characters. If omitted, the document name defaults to `Document`.
+</ParamField>
+
+```json
+{
+  "SenderNumber": "15551234567",
+  "MetaTemplateId": "1754028",
+  "MediaFilePath": "https://cdn.example.com/invoice.pdf",
+  "FileName": "Invoice-1042.pdf",
+  "BulkPayload": {
+    "RecieverNumber": "15559876543,15557654321",
+    "BodyVariables": ["Amina", "ORD-1042"]
+  }
+}
+```
+
+For per-recipient body values, keep `MediaFilePath` at the top level and replace `BulkPayload` with `CustomPayload`:
+
+```json
+{
+  "SenderNumber": "15551234567",
+  "MetaTemplateId": "1754028",
+  "MediaFilePath": "https://cdn.example.com/promotion.png",
+  "CustomPayload": [
+    {
+      "RecieverNumber": "15559876543",
+      "BodyVariables": ["Amina", "20%"]
+    },
+    {
+      "RecieverNumber": "15557654321",
+      "BodyVariables": ["David", "15%"]
+    }
+  ]
+}
+```
+
+<Note>
+A top-level media file is shared by every recipient in the request. Use carousel cards when each recipient or card needs separate media.
+</Note>
+
+## Location header
+
+<ParamField body="LocationDetail" type="object" required>
+  Location content for a template with a location header.
+</ParamField>
+
+<ParamField body="LocationDetail.Latitude" type="string" required>
+  Latitude of the location.
+</ParamField>
+
+<ParamField body="LocationDetail.Longitude" type="string" required>
+  Longitude of the location.
+</ParamField>
+
+<ParamField body="LocationDetail.Name" type="string" required>
+  Display name for the location.
+</ParamField>
+
+<ParamField body="LocationDetail.Address" type="string" required>
+  Human-readable street address.
+</ParamField>
+
+```bash
+curl --request POST \
+  --url "https://app.notify.ng/api/whatsapp/v1/Send" \
+  --user "$CLIENT_ID:$API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "SenderNumber": "15551234567",
+    "MetaTemplateId": "18888001",
+    "LocationDetail": {
+      "Latitude": "6.5244",
+      "Longitude": "3.3792",
+      "Name": "Ruach Lagos Office",
+      "Address": "Lagos, Nigeria"
+    },
+    "BulkPayload": {
+      "RecieverNumber": "15559876543,15557654321",
+      "BodyVariables": ["Friday", "10:00 AM"]
+    }
+  }'
+```
+
+As with media, a top-level location is shared by all recipients. `BodyVariables` is optional when the approved template has no body placeholders.

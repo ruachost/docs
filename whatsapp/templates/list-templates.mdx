@@ -1,0 +1,67 @@
+---
+title: "List Templates"
+description: "List WhatsApp templates by WABA, status, and pagination options"
+api: "GET /api/whatsapp/v1/Template/GetAll"
+---
+
+Returns the templates associated with a WhatsApp Business Account. Results default to the 25 most recently created templates.
+
+## Query parameters
+
+<ParamField query="WABAID" type="string" required>
+  WhatsApp Business Account identifier returned by the connectors endpoint.
+</ParamField>
+
+<ParamField query="offset" type="integer" default="0">
+  Number of templates to skip. Use with `limit` for pagination.
+</ParamField>
+
+<ParamField query="limit" type="integer" default="25">
+  Number of templates to return. The maximum value is `25`.
+</ParamField>
+
+<ParamField query="templateStatus" type="integer">
+  Filters by template status: `0` Draft, `1` Pending, `2` Rejected, or `3` Approved.
+</ParamField>
+
+## Request
+
+```bash
+curl --get "https://app.notify.ng/api/whatsapp/v1/Template/GetAll" \
+  --user "$CLIENT_ID:$API_KEY" \
+  --header "Accept: application/json" \
+  --data-urlencode "WABAID=10032002100120020" \
+  --data-urlencode "offset=0" \
+  --data-urlencode "limit=25" \
+  --data-urlencode "templateStatus=3"
+```
+
+Omit `offset`, `limit`, and `templateStatus` to use the default listing behavior.
+
+## Response
+
+<ResponseField name="templates" type="string[]">
+  Template definitions returned as JSON-encoded strings.
+</ResponseField>
+
+<ResponseField name="paginationDetails" type="string">
+  Human-readable summary of the returned and total template counts.
+</ResponseField>
+
+```json
+{
+  "templates": [
+    "{\"name\":\"order_update\",\"metaTemplateId\":\"12121212212\",\"language\":\"en\",\"Status\":\"Approved\",\"category\":\"UTILITY\",\"components\":[{\"type\":\"BODY\",\"text\":\"Hello {{1}}, your order {{2}} is ready.\"}]}"
+  ],
+  "paginationDetails": "Fetched 1 templates of total 1 templates"
+}
+```
+
+<Note>
+Each item in `templates` is JSON encoded inside a string. Parse each string before reading fields such as `name`, `metaTemplateId`, `Status`, or `components`.
+</Note>
+
+```javascript
+const result = await response.json();
+const templates = result.templates.map((item) => JSON.parse(item));
+```

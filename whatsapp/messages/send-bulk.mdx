@@ -1,0 +1,111 @@
+---
+title: "Send a Bulk Template Message"
+description: "Send the same template content and variables to multiple WhatsApp recipients"
+api: "POST /api/whatsapp/v1/Send"
+---
+
+Use `BulkPayload` when every recipient receives the same template variable values. Supply recipients as a comma-separated string in `RecieverNumber`.
+
+## Request fields
+
+<ParamField body="SenderNumber" type="string" required>
+  Active WhatsApp sender number returned by the connectors endpoint.
+</ParamField>
+
+<ParamField body="MetaTemplateId" type="string" required>
+  Identifier of the approved Meta template to send.
+</ParamField>
+
+<ParamField body="BulkPayload" type="object" required>
+  Shared payload applied to every recipient.
+</ParamField>
+
+<ParamField body="BulkPayload.RecieverNumber" type="string" required>
+  One or more recipient numbers in international format, separated by commas.
+</ParamField>
+
+<ParamField body="BulkPayload.HeaderVariable" type="string">
+  Value for a dynamic text header. A header supports at most one variable.
+</ParamField>
+
+<ParamField body="BulkPayload.BodyVariables" type="string[]">
+  Values for body placeholders, in the same order as the placeholders in the approved template.
+</ParamField>
+
+## Template without variables
+
+```bash
+curl --request POST \
+  --url "https://app.notify.ng/api/whatsapp/v1/Send" \
+  --user "$CLIENT_ID:$API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "SenderNumber": "15551234567",
+    "MetaTemplateId": "12121212212",
+    "BulkPayload": {
+      "RecieverNumber": "15559876543,15557654321"
+    }
+  }'
+```
+
+## Header and body variables
+
+```json
+{
+  "SenderNumber": "15551234567",
+  "MetaTemplateId": "12121212212",
+  "BulkPayload": {
+    "RecieverNumber": "15559876543,15557654321",
+    "HeaderVariable": "Order update",
+    "BodyVariables": [
+      "Amina",
+      "ORD-1042"
+    ]
+  }
+}
+```
+
+If the template contains only header variables or only body variables, omit the unused property.
+
+<Warning>
+The number and order of values must match the approved template. The header accepts a maximum of one variable.
+</Warning>
+
+## Success response
+
+```json
+{
+  "statusCode": 0,
+  "status": "Success",
+  "messages": [
+    {
+      "messageId": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
+      "receiverNumber": "15559876543"
+    },
+    {
+      "messageId": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "receiverNumber": "15557654321"
+    }
+  ]
+}
+```
+
+<ResponseField name="statusCode" type="number">
+  `0` indicates a successful request.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Human-readable request status.
+</ResponseField>
+
+<ResponseField name="messages" type="object[]">
+  One accepted message record per recipient.
+</ResponseField>
+
+<ResponseField name="messages[].messageId" type="string">
+  Unique message identifier.
+</ResponseField>
+
+<ResponseField name="messages[].receiverNumber" type="string">
+  Recipient associated with the message identifier.
+</ResponseField>

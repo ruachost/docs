@@ -99,6 +99,46 @@
         ]
       },
       {
+        "tab": "WhatsApp API",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "whatsapp/index",
+              "whatsapp/authentication"
+            ]
+          },
+          {
+            "group": "Connectors",
+            "pages": [
+              "whatsapp/connectors/get-connectors"
+            ]
+          },
+          {
+            "group": "Templates",
+            "pages": [
+              "whatsapp/templates/get-template",
+              "whatsapp/templates/list-templates"
+            ]
+          },
+          {
+            "group": "Send Messages",
+            "pages": [
+              "whatsapp/messages/send-bulk",
+              "whatsapp/messages/send-custom",
+              "whatsapp/messages/media-and-location",
+              "whatsapp/messages/carousel"
+            ]
+          },
+          {
+            "group": "Errors",
+            "pages": [
+              "whatsapp/error-codes"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Dashboard Walkthrough",
         "groups": [
           {
